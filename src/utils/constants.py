@@ -10,6 +10,7 @@ def get_repo_folder():
             return parent
     raise FileNotFoundError("Repository folder 'PrivateTeacherAgent' not found.")
 
+TOKEN_COUNT_FILE_PATH = get_repo_folder() / os.path.join('tokens_count','total_tokens.csv')
 
 OPENAI_API_KEY = os.getenv("API_KEY")  # API key
 CHAT_DEPLOYMENT_NAME = "team9-gpt4o"
@@ -18,4 +19,5 @@ EMBEDDING_DEPLOYMENT_NAME = "team9-embedding"
 AZURE_OPENAI_ENDPOINT = "https://096290-oai.openai.azure.com"
 API_VERSION = "2023-05-15"
 
-TOKEN_COUNT_FILE_PATH = get_repo_folder() / os.path.join('tokens_count','total_tokens.csv')
+PRICE_1M_INPUT_TOKENS = 2.5
+PRICE_1M_OUTPUT_TOKENS = 10
