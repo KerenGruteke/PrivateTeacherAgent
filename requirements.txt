@@ -8,3 +8,8 @@ loguru
 nltk
 tqdm
 openai
+langchain
+langchain-community
+langchain-core
+dotenv
+duckduckgo-search

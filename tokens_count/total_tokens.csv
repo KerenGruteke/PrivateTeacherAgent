@@ -1,1 +1,39 @@
-date_time,agent_name,input tokens,output tokens
+date_time,agent_name,prompt,generated_answer,input tokens,output tokens
+2025-07-17 12:00:31,test,,,9,11
+2025-07-17 13:00:31,test,,,8,10
+2025-07-17 13:01:41,test,,,9,11
+2025-07-17 13:18:28,MAIN_PRIVATE_AGENT,,,8,11
+2025-07-17 13:18:28,MAIN_PRIVATE_AGENT,,,8,11
+2025-07-17 13:29:07,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today? 😊,8,11
+2025-07-17 13:31:34,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today? 😊,8,11
+2025-07-17 13:36:17,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today?,8,10
+2025-07-17 13:36:17,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today?,8,10
+2025-07-17 13:31:34,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today? 😊,8,11
+2025-07-17 13:36:17,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today?,8,10
+2025-07-17 13:41:40,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today? 😊,8,11
+2025-07-17 13:44:47,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today? 😊,8,11
+2025-07-17 13:45:38,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today? 😊,8,11
+2025-07-17 14:32:40,MAIN_PRIVATE_AGENT,"Answer the following questions as best you can. You have access to the following tools:
+
+Search(tool_input: 'Union[str, dict[str, Any]]', verbose: 'Optional[bool]' = None, start_color: 'Optional[str]' = 'green', color: 'Optional[str]' = 'green', callbacks: 'Callbacks' = None, *, tags: 'Optional[list[str]]' = None, metadata: 'Optional[dict[str, Any]]' = None, run_name: 'Optional[str]' = None, run_id: 'Optional[uuid.UUID]' = None, config: 'Optional[RunnableConfig]' = None, tool_call_id: 'Optional[str]' = None, **kwargs: 'Any') -> 'Any' - Useful for answering questions about current or factual data
+Calculator(x) - Useful for math operations like square roots, multipication, etc.
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [Search, Calculator]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin!
+
+Question: What is the population of Paris, and what is the square root of that number?
+Thought:","I need to find the current population of Paris first, then calculate the square root of that number. 
+
+Action: Search
+Action Input: ""current population of Paris 2023""",303,37
+2025-07-17 14:36:24,MAIN_PRIVATE_AGENT,a,Hello! How can I assist you today? 😊,8,11
