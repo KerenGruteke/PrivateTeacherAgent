@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "PrivateTeacherAgent"
 version = "0.1.0"
 authors = [
-  {name="Keren Gruteke Klein", email="gkeren<at>campus.technion.ac.il"},
+  { name = "Keren Gruteke Klein", email = "gkeren@campus.technion.ac.il" },
 ]
 
 readme = "README.md"
