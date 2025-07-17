@@ -21,6 +21,9 @@ llm = LoggingAzureChatOpenAI(
     temperature=0,
 )
 
+def root_calculator(number: int) -> str:
+    return str(float(number)**0.5)
+
 # 2. Define tools
 search = DuckDuckGoSearchRun()
 tools = [
@@ -31,7 +34,7 @@ tools = [
     ),
     Tool(
         name="Calculator",
-        func=lambda x: str(eval(x)),
+        func=root_calculator,
         description="Useful for math operations like square roots, multipication, etc."
     )
 ]
