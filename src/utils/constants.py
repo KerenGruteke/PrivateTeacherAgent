@@ -7,4 +7,4 @@ EMBEDDING_DEPLOYMENT_NAME = "team9-embedding"
 AZURE_OPENAI_ENDPOINT = "?"
 API_VERSION = "?"
 
-OUTPUT_FILE_PATH = 'tokens_count/total_tokens.txt'
+TOKEN_COUNT_FILE_PATH = os.path.join('tokens_count', 'total_tokens.csv')

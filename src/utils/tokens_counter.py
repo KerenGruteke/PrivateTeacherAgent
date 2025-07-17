@@ -1,13 +1,34 @@
 import csv
-from src.utils.constants import OUTPUT_FILE_PATH
+from src.utils.constants import TOKEN_COUNT_FILE_PATH
 
 
-# TODO: change the function
-def write_token_count_to_csv(response):
-    """gets an llm response and store the number of tokens used into a csv file"""
+def token_count_to_csv(response):
+    """
+    Extracts token usage from an LLM response and appends it to a CSV file.
+
+    The CSV file will store the number of prompt (input) and completion (output) tokens used.
+    """
     token_usage = response.response_metadata["token_usage"]
-    input_token_counter, output_token_counter = token_usage["prompt_tokens"], token_usage["completion_tokens"]
+    prompt_tokens = token_usage["prompt_tokens"]
+    completion_tokens = token_usage["completion_tokens"]
 
-    with open(OUTPUT_FILE_PATH, mode="a", newline="") as file:
+    with open(TOKEN_COUNT_FILE_PATH, mode="a", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow([input_token_counter, output_token_counter])
+        writer.writerow([prompt_tokens, completion_tokens])
+
+
+# Example usage with a mock response object
+class MockResponse:
+    def __init__(self, prompt_tokens, completion_tokens):
+        self.response_metadata = {
+            "token_usage": {
+                "prompt_tokens": prompt_tokens,
+                "completion_tokens": completion_tokens
+            }
+        }
+
+# Create a fake response
+fake_response = MockResponse(prompt_tokens=87, completion_tokens=143)
+
+# Call the function
+token_count_to_csv(fake_response)
