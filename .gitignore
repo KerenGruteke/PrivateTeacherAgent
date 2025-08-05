@@ -2,3 +2,4 @@ src/data/DB_questions/History/ChroniclingAmericaQA/train.json
 src/data/DB_questions/History/HQA-data/HQA-data.zip
 src/data/DB_questions/Math/math_dataset_csvs
 
+*.pyc
