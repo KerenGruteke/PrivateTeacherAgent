@@ -3,3 +3,5 @@ src/data/DB_questions/History/HQA-data/HQA-data.zip
 src/data/DB_questions/Math/math_dataset_csvs
 
 *.pyc
+.env
+__pycache__/

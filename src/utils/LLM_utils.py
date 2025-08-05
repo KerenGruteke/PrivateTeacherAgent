@@ -3,7 +3,6 @@ from pydantic import Field
 from typing import Optional
 from src.utils.tokens_counter import log_token_count_to_csv
 
-
 class LoggingAzureChatOpenAI(AzureChatOpenAI):
     agent_name: Optional[str] = Field(default="default_agent")
 
