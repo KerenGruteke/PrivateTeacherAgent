@@ -8,3 +8,4 @@ loguru
 nltk
 tqdm
 openai
+datasets
