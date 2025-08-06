@@ -9,4 +9,3 @@ __pycache__/
 
 # include mini csv files
 src/data/DB_questions/Math/math_dataset_csvs/*_mini.csv
-.env
