@@ -4,6 +4,8 @@ from pathlib import Path
 def get_repo_folder():
     """Find the repository folder by traversing up the directory tree."""
     current = Path.cwd()
+    if current.name == "PrivateTeacherAgent":
+        return current
     for parent in current.parents:
         if parent.name == "PrivateTeacherAgent":
             return parent

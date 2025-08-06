@@ -3,5 +3,10 @@ src/data/DB_questions/History/HQA-data/HQA-data.zip
 src/data/DB_questions/Math/math_dataset_csvs
 
 *.pyc
-.env
+.env 
+*.env
 __pycache__/
+
+# include mini csv files
+src/data/DB_questions/Math/math_dataset_csvs/*_mini.csv
+.env

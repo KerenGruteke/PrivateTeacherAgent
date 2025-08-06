@@ -19,9 +19,10 @@
 import datasets
 import pandas as pd
 from pathlib import Path
-from src.utils.constants import repo_folder
+from loguru import logger
+from src.utils.folders_utils import get_repo_folder
+repo_folder = get_repo_folder()
 
-logger = datasets.logging.get_logger(__name__)
 
 
 _CITATION = """
@@ -297,7 +298,7 @@ if __name__ == "__main__":
 
 
     for module_name in modules_to_process:
-        print(f"Processing module: {module_name}")
+        logger.info(f"Processing module: {module_name}")
 
         # Initialize and prepare the dataset
         builder = MathDataset(config_name=module_name)
@@ -312,9 +313,9 @@ if __name__ == "__main__":
         full_csv_path = output_dir / f"{module_name}_full.csv"
         df.to_csv(full_csv_path, index=False)
         full_size = full_csv_path.stat().st_size
-        print(f"Saved full dataset to {full_csv_path} ({len(df)} rows,{format_size(full_size)})")
+        logger.info(f"Saved full dataset to {full_csv_path} ({len(df)} rows,{format_size(full_size)})")
 
         # Save mini CSV with 5 examples
         mini_csv_path = output_dir / f"{module_name}_mini.csv"
         df.head(5).to_csv(mini_csv_path, index=False)
-        print(f"Saved mini dataset to {mini_csv_path}")
+        logger.info(f"Saved mini dataset to {mini_csv_path}")
