@@ -1,11 +1,10 @@
 from dotenv import load_dotenv
 
 from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
-from utils.LLM_utils import LoggingAzureChatOpenAI
+from src.utils.LLM_utils import LoggingAzureChatOpenAI
 
 from langchain.agents import initialize_agent, Tool
 from langchain.tools import DuckDuckGoSearchRun
-from langchain.chat_models import AzureChatOpenAI
 from langchain.agents.agent_types import AgentType
 
 load_dotenv()
