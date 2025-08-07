@@ -112,25 +112,25 @@ class DB:
     def print_collections(self):
         print(self.qdrant_client.get_collections())
 
+if __name__ == "__main__":
+    db = DB()
+    db.delete_all_collections()
+    db.create_collection(
+        collection_name="student_db",
+        dim=1
+    )
+    db.insert_student("student_db", students)
+    students_data = db.get_students_data("student_db", ["S002"])
+    print(students_data)
+    student_payload = students_data["S002"]
+    print(student_payload)
+    student_payload["name"] = "Ali Mohamad"
+    db.update_metadata(
+        collection_name="student_db",
+        student_id=student_payload["student_id"],
+        new_metadata=student_payload
+    )
 
-db = DB()
-db.delete_all_collections()
-db.create_collection(
-    collection_name="student_db",
-    dim=1
-)
-db.insert_student("student_db", students)
-students_data = db.get_students_data("student_db", ["S002"])
-print(students_data)
-student_payload = students_data["S002"]
-print(student_payload)
-student_payload["name"] = "Ali Mohamad"
-db.update_metadata(
-    collection_name="student_db",
-    student_id=student_payload["student_id"],
-    new_metadata=student_payload
-)
-
-student_payload = db.get_students_data("student_db", ["S002"])
-print(student_payload)
-1 == 1
+    student_payload = db.get_students_data("student_db", ["S002"])
+    print(student_payload)
+    1 == 1
