@@ -1,6 +1,7 @@
 from qdrant_client.models import Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue
 from qdrant_client import QdrantClient
 from src.utils.constants import QDRANT_CLUSTER_URL, QDRANT_API_KEY
+from typing import List
 import uuid
 
 students = [
@@ -69,19 +70,18 @@ class DB:
             points=[uuid_id]
         )
 
-    def get_student_data(self, collection_name, student_id):
-        uuid_id = student_id_to_uuid(student_id)
+    def get_students_data(self, collection_name, student_ids: List):
+        uuid_ids = [student_id_to_uuid(student_id) for student_id in student_ids]
 
         results = self.qdrant_client.retrieve(
             collection_name=collection_name,
-            ids=[uuid_id],
+            ids=uuid_ids,
             with_payload=True,
             with_vectors=False
         )
 
         if results:
-            student = results[0]
-            return student.payload["student_id"],  student.payload
+            return {student.payload["student_id"]:student.payload for student in results}
 
         return None
 
@@ -120,7 +120,9 @@ db.create_collection(
     dim=1
 )
 db.insert_student("student_db", students)
-_, student_payload = db.get_student_data("student_db", "S002")
+students_data = db.get_students_data("student_db", ["S002"])
+print(students_data)
+student_payload = students_data["S002"]
 print(student_payload)
 student_payload["name"] = "Ali Mohamad"
 db.update_metadata(
@@ -129,6 +131,6 @@ db.update_metadata(
     new_metadata=student_payload
 )
 
-student_id, student_payload = db.get_student_data("student_db", "S002")
+student_payload = db.get_students_data("student_db", ["S002"])
 print(student_payload)
 1 == 1
