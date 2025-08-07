@@ -10,7 +10,6 @@ import os
 
 load_dotenv()
 
-
 class LoggingAzureChatOpenAI(AzureChatOpenAI):
     agent_name: Optional[str] = Field(default="default_agent")
 
@@ -48,4 +47,24 @@ class LoggingEmbedding:
             input_tokens = resp.usage.prompt_tokens
             log_token_count_to_csv("Embedded", text, "Vector", input_tokens, 0)
 
-        return embeddings
+        dim = len(embeddings[0]) if embeddings else 0
+        return embeddings, dim
+    
+if __name__ == "__main__":
+    # Example usage
+    embeder_client = LoggingEmbedding()
+    embeddings, dim = embeder_client.embed(["a"])
+    print(f"Embedding dimension: {dim}")
+    1 == 1
+    
+    # simple df 
+    import pandas as pd
+    df = pd.DataFrame({
+        "id": [1, 2, 3],
+        "text": ["Hello", "World", "Test"]
+    })
+    
+    # Convert to embeddings
+    df['embeddings'], dim = embeder_client.embed(df['text'].tolist())
+    print(f"Embedding dimension: {dim}")
+    print(df)
