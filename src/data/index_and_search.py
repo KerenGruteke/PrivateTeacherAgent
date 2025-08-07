@@ -174,32 +174,6 @@ def _get_studens_DB_for_test():
         ),
     ]
     
-
-def _test_DB_class():
-    students = _get_studens_DB_for_test()
-    
-    db = DB()
-    db.create_collection(
-        collection_name="student_db_test",
-        dim=1
-    )
-    db.insert_data("student_db_test", students)
-    students_data = db.get_items_data("student_db_test", ["S002"])
-    print(students_data)
-    student_payload = students_data["S002"]
-    print(student_payload)
-    student_payload["name"] = "Ali Mohamad"
-    db.update_metadata(
-        collection_name="student_db_test",
-        item_id=student_payload["student_id"],
-        new_metadata=student_payload
-    )
-
-    student_payload = db.get_items_data("student_db_test", ["S002"])
-    print(student_payload)
-    db.qdrant_client.delete_collection(collection_name="student_db_test")
-    1 == 1
-    
 def _test_index_df():
     df = pd.DataFrame({
         "id": [1, 2, 3],
@@ -220,7 +194,6 @@ def _test_search_by_query_vec():
     logger.debug("Search completed successfully.")
 
 if __name__ == "__main__":
-    # _test_DB_class()
     # _test_index_df()
     _test_search_by_query_vec()
 
