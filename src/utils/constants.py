@@ -1,4 +1,7 @@
+import dotenv
 import os
+
+dotenv.load_dotenv()
 
 # LLM 
 OPENAI_API_KEY = os.getenv("API_KEY")  # API key
