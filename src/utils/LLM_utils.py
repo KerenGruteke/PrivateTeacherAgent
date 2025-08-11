@@ -2,6 +2,7 @@ from langchain.chat_models import AzureChatOpenAI
 from openai import AzureOpenAI
 from typing import Optional, List
 from pydantic import Field
+from tqdm import tqdm
 
 from src.utils.constants import EMBEDDING_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION, EMBEDDING_MODEL
 from src.utils.tokens_counter import log_token_count_to_csv
@@ -39,7 +40,7 @@ class LoggingEmbedding:
 
     def embed(self, texts: List[str]):
         embeddings = []
-        for text in texts:
+        for text in tqdm(texts, desc="Generating embeddings"):
             resp = self.client.embeddings.create(input=text, model=EMBEDDING_MODEL)
             embedding_vec = resp.data[0].embedding
             embeddings.append(embedding_vec)

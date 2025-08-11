@@ -4,6 +4,7 @@ from src.utils.constants import QDRANT_CLUSTER_URL, QDRANT_API_KEY, EMBEDDING_DI
 from src.utils.LLM_utils import LoggingEmbedding
 from typing import List
 from loguru import logger
+from tqdm import tqdm
 import uuid
 import pandas as pd
 
@@ -51,7 +52,7 @@ class DB:
         data (List[tuple]): List of tuples containing vectors and payloads.
         """
         data_points = []
-        for vector, payload in data:
+        for vector, payload in tqdm(data, desc=f"Inserting data into {collection_name}"):
             data_points.append(
                 PointStruct(
                     id=convert_to_uuid(payload[id_col]),
@@ -108,14 +109,30 @@ class DB:
         for collection in collections.collections:
             self.qdrant_client.delete_collection(collection_name=collection.name)
             logger.info(f"Collection '{collection.name}' has been deleted.")
+            
+    def delete_collection(self, collection_name: str):
+        """
+        Delete a specific Qdrant collection.
+        :param collection_name: The name of the collection to delete.
+        """
+        self.qdrant_client.delete_collection(collection_name=collection_name)
+        logger.info(f"Collection '{collection_name}' has been deleted.")
 
     def print_collections(self):
-        logger.info(self.qdrant_client.get_collections())
+        print(self.qdrant_client.get_collections())
         
-    def print_example(self, collection_name: str):
-        points = self.qdrant_client.scroll(collection_name=collection_name, limit=1)
-        logger.info(f"Example from collection '{collection_name}': \n{points}")
+    def print_example(self, collection_name: str, limit: int = 1):
+        points = self.qdrant_client.scroll(collection_name=collection_name, limit=limit)
+        print(f"Example from collection '{collection_name}': \n{points}")
         
+    def print_collection_size(self, collection_name: str):
+        """
+        Print the size of a specific Qdrant collection.
+        :param collection_name: The name of the collection to check.
+        """
+        size = self.qdrant_client.count(collection_name=collection_name)
+        print(f"Collection '{collection_name}' size: {size}")
+
     def search_by_query_vec(self, collection_name: str, query: str, top_k: int = 5) -> list[str]:
         vecs, _ = self.embeder_client.embed([query])
         vec = vecs[0] # need only one vector for the query
@@ -143,8 +160,7 @@ def index_df(df, index_by_col: str, need_to_embed_col: bool, id_col: str, collec
     db = DB()
     db.create_collection(collection_name, dim)
     db.insert_data(collection_name, list(zip(vectors, df.to_dict(orient='records'))), id_col=id_col)
-    db.print_collections()
-    db.print_example(collection_name)
+    db.print_collection_size(collection_name)
 
 def _get_studens_DB_for_test():
     students = [

@@ -9,3 +9,7 @@ __pycache__/
 
 # include mini csv files
 src/data/DB_questions/Math/math_dataset_csvs/*_mini.csv
+src/data/DB_questions/History/train.json
+src/data/DB_questions/Science/science_questions_to_index.csv
+src/data/DB_questions/History/history_questions_to_index.csv
+src/data/DB_questions/SAT/sat_questions_to_index.csv
