@@ -79,14 +79,16 @@ class LoggingEmbedding:
         return embeddings, dim
 
 
-@cached_property
+# --- singleton instance + accessor ---
+_EMBEDDING_SINGLETON = LoggingEmbedding()
+
 def get_embedding_object():
-    return LoggingEmbedding()
+    return _EMBEDDING_SINGLETON
 
 
 if __name__ == "__main__":
     # Example usage
-    embeder_client = LoggingEmbedding()
+    embeder_client = get_embedding_object()
     embeddings, dim = embeder_client.embed(["a"])
     print(f"Embedding dimension: {dim}")
     1 == 1

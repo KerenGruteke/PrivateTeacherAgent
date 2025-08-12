@@ -38,7 +38,7 @@ Skill: Compare ages of fossils in a rock sequence
 
 free_text could include any relevant information or context needed to answer the question.
 
-Pay Attention! Your final output should be in JSON format.
+Pay Attention! Your final output should be in a string in the format above.
 """
 
 math_questions_prompt = """
@@ -55,11 +55,11 @@ Where these are the available topics (with example in parentheses)
 - comparison__sort (e.g. Sort -65, 5, -66.)
 - numbers__gcd (e.g. What is the greatest common factor of 806848 and 21?)
 - polynomials__expand (e.g. Expand (4*c + 5*c - 5*c)*((-1 - 1 + 3)*(-14 + 15*c + 14) + c + 0*c - 4*c).)
-- probability__swr_p_sequence (e.g. Three letters picked without replacement from {h: 11, p: 5}. Give prob of sequence ppp.)
+- probability__swr_p_sequence (e.g. Three letters picked without replacement from {{h: 11, p: 5}}. Give prob of sequence ppp.)
 
 free_text could include any relevant information or context needed to answer the question.
 
-Pay Attention! Your final output should be in JSON format.
+Pay Attention! Your final output should be in a string in the format above.
 """
 
 history_questions_prompt = """ 
@@ -70,7 +70,7 @@ Question_About: <free_text>
 
 free_text could include any relevant information or context needed to answer the question.
 
-Pay Attention! Your final output should be in JSON format.
+Pay Attention! Your final output should be in a string in the format above.
 """
 
 sat_questions_prompt = """
@@ -81,7 +81,7 @@ Question_About: <free_text>
 
 free_text could include any relevant information or context needed to answer the question.
 
-Pay Attention! Your final output should be in JSON format.
+Pay Attention! Your final output should be in a string in the format above.
 """
 
 SUBJECT_GUIDELINES_PROMPTS_DICT = {
@@ -119,7 +119,7 @@ Instructions:
 - Use only the guidelines for the given subject.
 - Follow the field names and structure exactly.
 - Fill in any missing but reasonable details to make the query clear and specific.
-- Output only a valid JSON object — no extra text or explanation.
+- The output should be a string.
 """
 
 GET_QUERY_TO_SEARCH_USER_PROMPT = """
@@ -128,7 +128,7 @@ Subject: {subject}
 Guidelines:
 {subject_guidelines}
 
-Rewrite the following request into the correct JSON format according to the guidelines above:
+Rewrite the following request into the correct format according to the guidelines above:
 
 {request}
 """
@@ -155,9 +155,9 @@ Quality rules:
 - The solution must be correct and clearly explained.
 - Keep length reasonable (question ≤ 120 words; solution ≤ 180 words, unless math steps require brevity with equations).
 
-Output format:
-Return ONLY a single valid JSON object with these keys:
-{
+When you are done, respond with:
+Final Answer:
+{{
     "subject": "<Science|Math|History|SAT>",
     "question": "<string>",
     "solution": "<string>",
@@ -165,7 +165,7 @@ Return ONLY a single valid JSON object with these keys:
     "difficulty": "<easy|medium|hard, optional>",
     "source": "<db|web>",
     "provenance": "<short note or doc ids/urls used>"
-}
+}}
 
 Do not include any text outside the JSON. If insufficient information after the allowed tool calls, still produce a reasonable question and solution based on the best available info, and set "source" accordingly.
 """
@@ -178,10 +178,10 @@ Instructions:
 - First, call "Search_in_DB" to retrieve candidate documents (string).
 - If those are enough, synthesize ONE clear question and its correct solution, aligned to the request.
 - If not enough, call "Search_in_Web" once, then synthesize.
-- Respect the tool limits and return ONLY the final JSON as specified.
 
-Example (format only):
-{
+When you are done, respond with:
+Final Answer:
+{{
     "subject": "Math",
     "question": "A fair die is rolled twice. What is the probability of getting two sixes?",
     "solution": "There are 36 equally likely outcomes; only (6,6) works. Probability = 1/36.",
@@ -189,7 +189,7 @@ Example (format only):
     "difficulty": "easy",
     "source": "db",
     "provenance": "DB: math_prob_doc_17"
-}
+}}
 """
 
 

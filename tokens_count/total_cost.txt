@@ -1,0 +1,3 @@
+Not Embedded - Total cost: 0.1264475
+Embedded - Total cost: 0.04368314
+Total cost (both): 0.17

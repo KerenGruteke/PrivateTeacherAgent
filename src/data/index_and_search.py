@@ -147,10 +147,11 @@ class DB:
         results = self.qdrant_client.search(collection_name=collection_name, query_vector=vec, limit=top_k)
         return [result.payload for result in results]
 
+# --- singleton instance + accessor ---
+_DB_SINGLETON = DB()
 
-@cached_property
 def get_db_object():
-    return DB()
+    return _DB_SINGLETON
 
 
 def index_df(df, index_by_col: str, need_to_embed_col: bool, id_col: str, collection_name: str):
