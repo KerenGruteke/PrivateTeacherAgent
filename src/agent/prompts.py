@@ -12,6 +12,11 @@ What topic would you like to focus on today?
 # --------------------
 # Question RAG Prompts
 # --------------------
-
-
-
+GET_QUERY_TO_SEARCH_SYSTEM_PROMPT = """
+"""
+GET_QUERY_TO_SEARCH_USER_PROMPT = """
+"""
+REWRITE_QUESTION_SYSTEM_PROMPT = """
+"""
+REWRITE_QUESTION_USER_PROMPT = """
+"""
