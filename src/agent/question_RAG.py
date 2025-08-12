@@ -9,15 +9,16 @@ from src.agent.prompts import (
     GET_QUERY_TO_SEARCH_USER_PROMPT,
     GENERATE_QUESTION_SYSTEM_PROMPT,
     GENERATE_QUESTION_USER_PROMPT,
-    INFER_SUBJECT_SYSTEM_PROMPT,
-    INFER_SUBJECT_USER_PROMPT,
-    SUBJECT_GUIDELINES_PROMPTS_DICT,
+    INFER_course_SYSTEM_PROMPT,
+    INFER_course_USER_PROMPT,
+    course_GUIDELINES_PROMPTS_DICT,
 )
 from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
 from src.utils.LLM_utils import SystemMessage, HumanMessage
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 from src.utils.helper_function import json_parser
-from src.data.index_and_search import get_db_object, SUBJECT_TO_COLLECTION_NAME
+from src.data.index_and_search import get_db_object, COURSE_TO_COLLECTION_NAME
+from src.agent.student_evaluator import get_student_course_status
 
 
 # -------------------------------------
@@ -59,34 +60,34 @@ def _remove_redundant_data_fields(docs):
     return docs
 
 # -------------------------------------
-# Subject inference
+# course inference
 # -------------------------------------
-def infer_subject_from_request(request: str) -> str:
+def infer_course_from_request(request: str) -> str:
     llm = get_model()
-    subject = _call(
+    course = _call(
         llm,
-        INFER_SUBJECT_SYSTEM_PROMPT,
-        INFER_SUBJECT_USER_PROMPT.format(request=request),
+        INFER_course_SYSTEM_PROMPT,
+        INFER_course_USER_PROMPT.format(request=request),
     ).strip()
 
     # Validate / fallback (TODO: consider retry if invalid)
-    if subject not in SUBJECT_GUIDELINES_PROMPTS_DICT:
-        subject = "SAT"  # default_subject
-    return subject
+    if course not in course_GUIDELINES_PROMPTS_DICT:
+        course = "SAT"  # default_course
+    return course
 
 
 # -------------------------------------
-# Build structured query for the chosen subject
+# Build structured query for the chosen course
 # -------------------------------------
-def get_query_to_search(request: str, subject: str) -> str:
+def get_query_to_search(request: str, course: str) -> str:
     llm = get_model()
     response = _call(
         llm,
         GET_QUERY_TO_SEARCH_SYSTEM_PROMPT,
         GET_QUERY_TO_SEARCH_USER_PROMPT.format(
             request=request,
-            subject=subject,
-            subject_guidelines=SUBJECT_GUIDELINES_PROMPTS_DICT[subject],
+            course=course,
+            course_guidelines=course_GUIDELINES_PROMPTS_DICT[course],
         ),
     )
     return response
@@ -98,12 +99,14 @@ def get_query_to_search(request: str, subject: str) -> str:
 def search_in_DB(request: str) -> str:
     """
     Search for relevant documents in the database based on the user request.
+    Input: 
+        - User request (str)
     Returns:
         JSON string: [{"doc_id": "...", "snippet": "...", "metadata": {...}}, ...]
     """
-    subject = infer_subject_from_request(request)
-    collection_name = SUBJECT_TO_COLLECTION_NAME[subject]
-    query_to_search = get_query_to_search(request, subject)
+    course = infer_course_from_request(request)
+    collection_name = COURSE_TO_COLLECTION_NAME[course]
+    query_to_search = get_query_to_search(request, course)
 
     docs = get_db_object().search_by_query_vec(
         collection_name=collection_name,
@@ -135,18 +138,20 @@ tools = [
 # -------------------------------------
 # Agent entry point
 # -------------------------------------
-def generate_question_agent(request: str) -> str:
+def generate_question_agent(request: str, student_id: str) -> str:
     """
     Runs a ReAct agent to generate a question based on the user request. It uses an Search_in_DB tool
     and may also use an external web search tool if necessary.
 
-    Input: User request string
+    Input: 
+    - User request (str)
+    - Student ID (str)
     Example: "Can you give me a question about photosynthesis?"
 
     Output: a single JSON object
     Example:
     {
-        "subject": "...",
+        "course": "...",
         "question": "...",
         "solution": "...",
         "hint": "...(optional)",
@@ -156,6 +161,13 @@ def generate_question_agent(request: str) -> str:
     }
     """
     llm = get_model()
+
+    # infer course
+    course = infer_course_from_request(request)
+
+    # Expand request by notes of student
+    student_evaluation_notes = get_student_course_status(student_id, course)
+    request = f"Request:\n{request}\nEvaluation Notes:\n{student_evaluation_notes}"
 
     # ReAct agents expect a single prompt string; we concatenate system + user parts.
     prompt_text = (
@@ -182,12 +194,18 @@ def generate_question_agent(request: str) -> str:
 
 if __name__ == "__main__":
     # test the agent
-    test_request = "Can you give me a question about photosynthesis?"
-    response = generate_question_agent(test_request)
-    print("Agent response:")
-    print(response)
+    # test_request = "Can you give me a question about photosynthesis?"
+    # response = generate_question_agent(test_request, student_id="S001")
+    # print("Agent response:")
+    # print(response)
 
-    test_request = "Can you give me a hard question in physics?"
-    response = generate_question_agent(test_request)
+    # test_request = "Can you give me a hard question in physics?"
+    # response = generate_question_agent(test_request, student_id="S001")
+    # print("Agent response:")
+    # print(response)
+    
+    # Math
+    test_request = "Can you give me a question about algebra?"
+    response = generate_question_agent(test_request, student_id="S001")
     print("Agent response:")
     print(response)

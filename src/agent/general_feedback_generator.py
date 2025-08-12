@@ -6,8 +6,9 @@ from src.utils.LLM_utils import SystemMessage, HumanMessage
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 from src.utils.helper_function import json_parser
 from src.data.index_and_search import get_db_object
-from src.agent.student_evaluator import update_student_level
-
+from langchain.agents import initialize_agent, Tool
+from langchain.agents.agent_types import AgentType
+from src.agent.student_evaluator import update_student_course_status
 
 @cached_property
 def get_model():
@@ -22,7 +23,16 @@ def get_model():
     return llm
 
 
-def final_feedback(messages, student_id, topic):
+tools = [
+        Tool(
+        name="Update Student Course Status",
+        func=update_student_course_status,
+        description="Convert qualitative session feedback into a structured status update and store it in the student DB.",
+    ),
+]
+
+
+def final_feedback(messages, student_id, course):
     messages.extend(
         [
             SystemMessage(
@@ -39,6 +49,6 @@ def final_feedback(messages, student_id, topic):
     json_output = json_parser(response.content)
 
     print(json_output["feedback"])
-    update_student_level(student_id, topic, json_output["feedback"])
+    update_student_level(student_id, course, json_output["feedback"])
 
     return response.content

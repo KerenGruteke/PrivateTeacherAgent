@@ -28,8 +28,8 @@ def get_model():
 def get_student_answer(question):
      return str(input(question))
 
-def get_common_mistakes(topic, question):
-    qid = f"Topic: {topic}\nQuestion: {question}"
+def get_common_mistakes(course, question):
+    qid = f"course: {course}\nQuestion: {question}"
 
     relevant_mistakes = get_db_object().search_by_query_vec(
         "common_mistakes",
@@ -60,7 +60,7 @@ tools = [
     )
 ]
 
-def hand_in_hand_agent(topic, question, solution, student_answer):
+def hand_in_hand_agent(course, question, solution, student_answer):
     llm = get_model()
 
     agent = initialize_agent(
@@ -78,7 +78,7 @@ def hand_in_hand_agent(topic, question, solution, student_answer):
 
             HumanMessage(
                 content=EVALUATE_ANSWER_USER_PROMPT.format(
-                    topic=topic,
+                    course=course,
                     question=question,
                     solution=solution,
                     student_answer=student_answer,

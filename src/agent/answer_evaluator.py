@@ -31,7 +31,7 @@ def _dedupe(seq: List[str]) -> List[str]:
     return list(dict.fromkeys([s for s in seq if isinstance(s, str) and s.strip()]))
 
 
-def evaluate_answer(student_answer: str, solution: str, question: str, topic: str) -> str:
+def evaluate_answer(student_answer: str, solution: str, question: str, course: str) -> str:
     """
     Evaluate a student's answer against the reference solution and (optionally) log common mistakes.
 
@@ -43,8 +43,8 @@ def evaluate_answer(student_answer: str, solution: str, question: str, topic: st
         The reference solution or marking guide.
     question : str
         The question text.
-    topic : str
-        The subject/topic label (e.g., 'Math', 'Science', 'History', 'SAT').
+    course : str
+        The subject/course label (e.g., 'Math', 'Science', 'History', 'SAT').
 
     Returns
     -------
@@ -57,7 +57,7 @@ def evaluate_answer(student_answer: str, solution: str, question: str, topic: st
         SystemMessage(content=EVALUATE_ANSWER_SYSTEM_PROMPT),
         HumanMessage(
             content=EVALUATE_ANSWER_USER_PROMPT.format(
-                topic=topic,
+                course=course,
                 question=question,
                 solution=solution,
                 student_answer=student_answer,
@@ -70,7 +70,7 @@ def evaluate_answer(student_answer: str, solution: str, question: str, topic: st
     output = json_parser(text)  # must return a dict; raise on invalid JSON
 
     # ---- Persist/merge common mistakes in the DB ----
-    qid = f"Topic: {topic}\nQuestion: {question}"
+    qid = f"course: {course}\nQuestion: {question}"
     new_mistakes: List[str] = _dedupe(output.get("common_mistakes", []) or [])
 
     if new_mistakes:
@@ -86,7 +86,7 @@ def evaluate_answer(student_answer: str, solution: str, question: str, topic: st
             df = pd.DataFrame(
                 [{
                     COMMON_MISTAKES_ID_COL: qid,
-                    "topic": topic,
+                    "course": course,
                     "question": question,
                     "common_mistakes": new_mistakes,
                 }]
@@ -105,7 +105,7 @@ def evaluate_answer(student_answer: str, solution: str, question: str, topic: st
             merged = _dedupe((record.get("common_mistakes") or []) + new_mistakes)
             record.update({
                 COMMON_MISTAKES_ID_COL: qid,
-                "topic": topic,
+                "course": course,
                 "question": question,
                 "common_mistakes": merged,
             })
@@ -129,8 +129,8 @@ def init_mistakes_DB_with_few_examples() :
     data = [
         # Math
         {
-            "topic": "Math",
-            "question_description": "Topic: math\nQuestion: What is the result of 7 + 7?",
+            "course": "Math",
+            "question_description": "course: math\nQuestion: What is the result of 7 + 7?",
             "question": "What is the result of 7 + 7?",
             "common_mistakes": [
                 "Answering 15 due to a simple addition error",
@@ -139,8 +139,8 @@ def init_mistakes_DB_with_few_examples() :
             ]
         },
         {
-            "topic": "Math",
-            "question_description": "Topic: math\nQuestion: What is the area of a square with side length 5 cm?",
+            "course": "Math",
+            "question_description": "course: math\nQuestion: What is the area of a square with side length 5 cm?",
             "question": "What is the area of a square with side length 5 cm?",
             "common_mistakes": [
                 "Multiplying by 4 instead of squaring the side (answering 20)",
@@ -150,8 +150,8 @@ def init_mistakes_DB_with_few_examples() :
 
         # Science
         {
-            "topic": "Science",
-            "question_description": "Topic: science\nQuestion: What is the boiling point of water at sea level in Celsius?",
+            "course": "Science",
+            "question_description": "course: science\nQuestion: What is the boiling point of water at sea level in Celsius?",
             "question": "What is the boiling point of water at sea level in Celsius?",
             "common_mistakes": [
                 "Answering 100°F instead of 100°C",
@@ -160,8 +160,8 @@ def init_mistakes_DB_with_few_examples() :
             ]
         },
         {
-            "topic": "Science",
-            "question_description": "Topic: science\nQuestion: What gas is released during photosynthesis?",
+            "course": "Science",
+            "question_description": "course: science\nQuestion: What gas is released during photosynthesis?",
             "question": "What gas is released during photosynthesis?",
             "common_mistakes": [
                 "Answering carbon dioxide instead of oxygen",
@@ -172,8 +172,8 @@ def init_mistakes_DB_with_few_examples() :
 
         # SAT
         {
-            "topic": "SAT",
-            "question_description": "Topic: SAT US History\nQuestion: In what year was the U.S. Constitution ratified?",
+            "course": "SAT",
+            "question_description": "course: SAT US History\nQuestion: In what year was the U.S. Constitution ratified?",
             "question": "In what year was the U.S. Constitution ratified?",
             "common_mistakes": [
                 "Answering 1776 (year of Declaration of Independence)",
@@ -182,8 +182,8 @@ def init_mistakes_DB_with_few_examples() :
             ]
         },
         {
-            "topic": "SAT",
-            "question_description": "Topic: SAT World History\nQuestion: In which years did World War II begin and end?",
+            "course": "SAT",
+            "question_description": "course: SAT World History\nQuestion: In which years did World War II begin and end?",
             "question": "In which years did World War II begin and end?",
             "common_mistakes": [
                 "Answering 1914–1918 (confusing with WWI)",
@@ -194,8 +194,8 @@ def init_mistakes_DB_with_few_examples() :
 
         # History
         {
-            "topic": "History",
-            "question_description": "Topic: history\nQuestion: In what year did Martin Luther King Jr. deliver his 'I Have a Dream' speech?",
+            "course": "History",
+            "question_description": "course: history\nQuestion: In what year did Martin Luther King Jr. deliver his 'I Have a Dream' speech?",
             "question": "In what year did Martin Luther King Jr. deliver his 'I Have a Dream' speech?",
             "common_mistakes": [
                 "Answering 1960 (confusing with earlier civil rights events)",
@@ -204,8 +204,8 @@ def init_mistakes_DB_with_few_examples() :
             ]
         },
         {
-            "topic": "History",
-            "question_description": "Topic: history\nQuestion: What year was the first human moon landing?",
+            "course": "History",
+            "question_description": "course: history\nQuestion: What year was the first human moon landing?",
             "question": "What year was the first human moon landing?",
             "common_mistakes": [
                 "Answering 1968 (confusing with Apollo 8 orbit)",
@@ -263,12 +263,12 @@ def _fetch_record(qid: str) -> Dict[str, Any] | None:
     return None if not res else res.get(qid)
 
 
-def _ensure_existing_record(qid: str, topic: str, question: str, mistakes: List[str]) -> None:
+def _ensure_existing_record(qid: str, course: str, question: str, mistakes: List[str]) -> None:
     """Create a baseline record if it doesn't exist."""
     if _fetch_record(qid) is None:
         df = pd.DataFrame([{
             COMMON_MISTAKES_ID_COL: qid,
-            "topic": topic,
+            "course": course,
             "question": question,
             "common_mistakes": mistakes,
         }])
@@ -291,13 +291,13 @@ def _test_common_mistake_for_new_question():
         1) collection size increases by 1
         2) new record has at least one common mistake
     """
-    topic = "Math"
+    course = "Math"
     # Make the question unique to avoid collisions in repeated runs
     uniq = int(time.time())
     question = f"What is 12 + 7? (run={uniq})"
     solution = "The sum is 19."
     student_answer = "21"  # wrong on purpose
-    qid = f"Topic: {topic}\nQuestion: {question}"
+    qid = f"course: {course}\nQuestion: {question}"
 
     size_before = _collection_size(COMMON_MISTAKES_COLLECTION)
 
@@ -306,7 +306,7 @@ def _test_common_mistake_for_new_question():
         student_answer=student_answer,
         solution=solution,
         question=question,
-        topic=topic,
+        course=course,
     )
 
     size_after = _collection_size(COMMON_MISTAKES_COLLECTION)
@@ -328,14 +328,14 @@ def _test_common_mistake_for_existing_question():
         1) collection size stays the same
         2) number of common mistakes for this question increases
     """
-    topic = "Science"
+    course = "Science"
     question = "What gas is released during photosynthesis?"
     solution = "Oxygen."
-    qid = f"Topic: {topic}\nQuestion: {question}"
+    qid = f"course: {course}\nQuestion: {question}"
 
     # Ensure baseline record exists with at least one mistake
     baseline_mistakes = ["Answering carbon dioxide instead of oxygen"]
-    _ensure_existing_record(qid, topic, question, baseline_mistakes)
+    _ensure_existing_record(qid, course, question, baseline_mistakes)
 
     size_before = _collection_size(COMMON_MISTAKES_COLLECTION)
     record_before = _fetch_record(qid)
@@ -348,7 +348,7 @@ def _test_common_mistake_for_existing_question():
         student_answer=student_answer,
         solution=solution,
         question=question,
-        topic=topic,
+        course=course,
     )
 
     size_after = _collection_size(COMMON_MISTAKES_COLLECTION)

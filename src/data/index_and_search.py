@@ -9,7 +9,7 @@ from tqdm import tqdm
 import uuid
 import pandas as pd
 
-SUBJECT_TO_COLLECTION_NAME = {
+COURSE_TO_COLLECTION_NAME = {
     'Math': "math_questions",
     'Science': "science_questions",
     'History': "history_questions",
