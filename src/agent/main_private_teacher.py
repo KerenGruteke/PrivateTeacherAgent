@@ -20,6 +20,9 @@ llm = LoggingAzureChatOpenAI(
     temperature=0,
 )
 
+question_RAG_agent = get_question_RAG_agent()
+
+
 def root_calculator(number: int) -> str:
     return str(float(number)**0.5)
 
@@ -51,3 +54,4 @@ question = "What is the population of Paris, and what is the square root of that
 response = agent.run(question)
 
 print("Answer:", response)
+
