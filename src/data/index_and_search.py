@@ -1,7 +1,8 @@
+from propcache import cached_property
 from qdrant_client.models import Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue
 from qdrant_client import QdrantClient
 from src.utils.constants import QDRANT_CLUSTER_URL, QDRANT_API_KEY, EMBEDDING_DIM
-from src.utils.LLM_utils import LoggingEmbedding
+from src.utils.LLM_utils import get_embedding_object
 from typing import List
 from loguru import logger
 from tqdm import tqdm
@@ -17,7 +18,7 @@ class DB:
             url=QDRANT_CLUSTER_URL,
             api_key=QDRANT_API_KEY,
         )
-        self.embeder_client = LoggingEmbedding()
+        self.embeder_client = get_embedding_object()
 
     def create_collection(self, collection_name, dim=1):
         if not self.qdrant_client.collection_exists(collection_name):
@@ -138,7 +139,12 @@ class DB:
         vec = vecs[0] # need only one vector for the query
         results = self.qdrant_client.search(collection_name=collection_name, query_vector=vec, limit=top_k)
         return [result.payload for result in results]
-        
+
+
+@cached_property
+def get_db_object():
+    return DB()
+
 
 def index_df(df, index_by_col: str, need_to_embed_col: bool, id_col: str, collection_name: str):
     """
@@ -150,7 +156,7 @@ def index_df(df, index_by_col: str, need_to_embed_col: bool, id_col: str, collec
     """
     # embed indexed col
     if need_to_embed_col:
-        embeder_client = LoggingEmbedding()
+        embeder_client = get_embedding_object()
         vectors, dim = embeder_client.embed(df[index_by_col].tolist())
     else:
         # vectors os just a list of zeros
