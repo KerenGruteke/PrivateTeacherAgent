@@ -15,7 +15,7 @@ from src.agent.answer_evaluator import evaluate_answer
 @cached_property
 def get_model():
     llm = LoggingAzureChatOpenAI(
-        agent_name="HAND_IN_HANS",
+        agent_name="HAND_IN_HAND",
         azure_deployment=CHAT_DEPLOYMENT_NAME,
         azure_endpoint=AZURE_OPENAI_ENDPOINT,
         openai_api_version=API_VERSION,

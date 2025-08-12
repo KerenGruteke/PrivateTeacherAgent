@@ -9,6 +9,13 @@ from tqdm import tqdm
 import uuid
 import pandas as pd
 
+SUBJECT_TO_COLLECTION_NAME = {
+    'Math': "math_questions",
+    'Science': "science_questions",
+    'History': "history_questions",
+    'SAT': "sat_questions"
+}
+
 def convert_to_uuid(id):
     return str(uuid.uuid5(uuid.NAMESPACE_DNS, str(id)))
 

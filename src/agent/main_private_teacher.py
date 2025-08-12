@@ -4,7 +4,6 @@ from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 
 from langchain.agents import initialize_agent, Tool
-from langchain.tools import DuckDuckGoSearchRun
 from langchain.agents.agent_types import AgentType
 
 load_dotenv()
