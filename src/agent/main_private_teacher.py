@@ -20,7 +20,6 @@ llm = LoggingAzureChatOpenAI(
     temperature=0,
 )
 
-question_RAG_agent = get_question_RAG_agent()
 
 
 def root_calculator(number: int) -> str:

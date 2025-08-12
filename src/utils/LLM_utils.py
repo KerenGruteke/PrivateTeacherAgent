@@ -1,6 +1,8 @@
 from langchain.chat_models import AzureChatOpenAI
 from openai import AzureOpenAI
 from typing import Optional, List
+
+from propcache import cached_property
 from pydantic import Field
 from tqdm import tqdm
 from langchain.schema import SystemMessage, HumanMessage, AIMessage, BaseMessage
@@ -75,7 +77,13 @@ class LoggingEmbedding:
 
         dim = len(embeddings[0]) if embeddings else 0
         return embeddings, dim
-    
+
+
+@cached_property
+def get_embedding_object():
+    return LoggingEmbedding()
+
+
 if __name__ == "__main__":
     # Example usage
     embeder_client = LoggingEmbedding()

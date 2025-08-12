@@ -12,7 +12,7 @@ from src.data.index_and_search import get_db_object
 @cached_property
 def get_model():
     llm = LoggingAzureChatOpenAI(
-        agent_name="question_RAG",
+        agent_name="GENERATE_QUESTION",
         azure_deployment=CHAT_DEPLOYMENT_NAME,
         azure_endpoint=AZURE_OPENAI_ENDPOINT,
         openai_api_version=API_VERSION,
@@ -61,8 +61,11 @@ def rewrite_question(user_request, retrieved_docs):
     return rewritten_question
 
 
-def get_question_using_RAG(user_request):
+def generate_question(user_request):
     query_to_search, collection_name = get_query_to_search(user_request)
     retrieved_docs = get_db_object().search_by_query_vec(collection_name, query_to_search, top_k=5)
     rewritten_question = rewrite_question(user_request, retrieved_docs)
     return rewritten_question
+
+
+
