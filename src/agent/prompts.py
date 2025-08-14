@@ -1,12 +1,15 @@
-# --------------------
-# Main Teacher Prompts
-# --------------------
 
 WELCOME_PROMPT = """
-Hi there! 👋 I’m your private teacher for today—ready to help you learn, practice, and improve.
+Hi {name}! 👋 I’m your private teacher for today—ready to help you learn, practice, and improve.
 My main areas of expertise are Math, History, Science, and SAT questions, but you’re welcome to ask me about other courses too.
 
 What course would you like to focus on today?
+Please enter one of the following options: Math, History, Science, SAT
+"""
+
+USER_REQUEST_PROMPT = """
+That's great {name}! Lets study today a bit of {course}.
+Do you have any specific topics or requests in mind?
 """
 
 # --------------------
@@ -133,7 +136,6 @@ Rewrite the following request into the correct format according to the guideline
 {request}
 """
 
-
 GENERATE_QUESTION_SYSTEM_PROMPT = """
 You are a question-generation assistant that MUST use tools judiciously.
 
@@ -197,7 +199,6 @@ Final Answer:
     "provenance": "DB: math_prob_doc_17"
 }}
 """
-
 
 # ---------------
 # Coacher Prompts
@@ -281,7 +282,6 @@ Output a JSON object with exactly these keys:
 }}
 """
 
-
 # -------------------------------
 # Initialize hand in hand Prompts
 # -------------------------------
@@ -318,11 +318,10 @@ At each sub-step:
 Do not skip any sub-step unless the student's answer is fully correct.
 """
 
-
-
 # ---------------------
 # Final feedback Prompt
 # ---------------------
+
 FINAL_FEEDBACK_SYSTEM_PROMPT = """
 You are a friendly and supportive learning assistant.
 Your task is to review the provided session summary and topic,
@@ -383,8 +382,8 @@ Student metadata:
 Student’s message:
 {user_message}
 
-Conversation so far (teacher/student only):
-{conversation_history}
+Student Evaluation Notes (from previous interactions):
+{student_evaluation_notes}
 
 Instruction:
 - If there is no active question in this conversation, IMMEDIATELY call "Question RAG"
@@ -396,4 +395,6 @@ Instruction:
 
 End your turn with:
 Final Response: <your single teacher message to the student>
+
+Finish the interaction with student after 3 questions.
 """

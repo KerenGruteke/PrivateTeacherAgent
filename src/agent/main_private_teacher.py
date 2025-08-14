@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-
+from functools import lru_cache
 from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 
@@ -10,41 +10,29 @@ from src.agent.question_RAG import generate_question_agent
 from src.agent.answer_evaluator import evaluate_answer
 from src.agent.hand_in_hand_solver import hand_in_hand_agent
 from src.agent.prompts import (
-    WELCOME_PROMPT,
     INITIALIZE_MAIN_PRIVATE_TEACHER_SYSTEM_PROMPT,
     INITIALIZE_MAIN_PRIVATE_TEACHER_USER_PROMPT
 )
+from src.utils.user_response import get_student_answer
+from src.agent.student_evaluator import get_student_course_status
 
 load_dotenv()
-MAIN_PRIVATE_AGENT="MAIN_PRIVATE_AGENT"
 
-# 1. Initialize LLM
-llm = LoggingAzureChatOpenAI(
-    agent_name=MAIN_PRIVATE_AGENT,
-    azure_deployment=CHAT_DEPLOYMENT_NAME,
-    azure_endpoint=AZURE_OPENAI_ENDPOINT,
-    openai_api_version=API_VERSION,
-    openai_api_type="azure",
-    temperature=0,
-)
+# -------------------------------------
+# LLM factory (cached; temperature=0 for stability)
+# -------------------------------------
+@lru_cache(maxsize=1)
+def get_model() -> LoggingAzureChatOpenAI:
+    return LoggingAzureChatOpenAI(
+        agent_name="MAIN_PRIVATE_AGENT",
+        azure_deployment=CHAT_DEPLOYMENT_NAME,
+        azure_endpoint=AZURE_OPENAI_ENDPOINT,
+        openai_api_version=API_VERSION,
+        openai_api_type="azure",
+        temperature=0,
+    )
 
-def get_student_answer(question: str):
-    """
-    Tool Name: Get Student Answer
-    Description:
-        Prompts the student to provide an answer to a given question.
-        This tool is intended to be used interactively during student interaction
-        where the AI tutor persent the question to the student collects answers from the student.
-
-    Args:
-        question (str): The question to ask the student.
-
-    Returns:
-        str: The student's answer as plain text.
-    """
-    return str(input(f"\nQuestion: {question}\nWrite your answer here: "))
-
-# 2. Define tools
+# Define tools
 tools = [
     Tool(
         name="Question RAG",
@@ -60,8 +48,8 @@ tools = [
         name="Get Student Answer",
         func=get_student_answer,
         description=("Prompts the student to provide an answer to the current sub-question. "
-                     "Returns the student's answer as a string."
-                     )
+                    "Returns the student's answer as a string."
+                    )
     ),
     Tool(
         name="Answer Evaluator",
@@ -93,26 +81,23 @@ tools = [
     
 ]
 
-# 3. Create ReAct agent
-agent = initialize_agent(
-    tools=tools,
-    llm=llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True,
-)
+# Create ReAct agent
+def init_private_teacher(student_id, course, user_message):
+    student_evaluation_notes = get_student_course_status(student_id, course)
 
-prompt = INITIALIZE_HAND_IN_HAND_SYSTEM_PROMPT + "\n" + \
-         INITIALIZE_HAND_IN_HAND_USER_PROMPT.format(
-             course=course,
-             question=question,
-             reference_solution=solution,
-             student_answer=student_answer
-         )
+    agent = initialize_agent(
+        tools=tools,
+        llm=get_model(),
+        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+        verbose=True,
+    )
 
-print(WELCOME_PROMPT)
-# 4. Run the agent
-question = "What is the population of Paris, and what is the square root of that number?"
-response = agent.run(question)
-
-print("Answer:", response)
-
+    prompt = INITIALIZE_MAIN_PRIVATE_TEACHER_SYSTEM_PROMPT + "\n" + \
+            INITIALIZE_MAIN_PRIVATE_TEACHER_USER_PROMPT.format(
+            student_id=student_id,
+            course=course,
+            user_message=user_message,
+            student_evaluation_notes=student_evaluation_notes
+        )
+    
+    return agent, prompt

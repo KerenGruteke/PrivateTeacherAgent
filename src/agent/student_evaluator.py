@@ -2,7 +2,7 @@ from datetime import datetime
 from functools import lru_cache
 from typing import Dict, Any
 import pandas as pd
-
+import numpy as np
 from src.agent.prompts import (
     UPDATE_STUDENT_STATUS_SYSTEM_PROMPT,
     UPDATE_STUDENT_STATUS_USER_PROMPT
@@ -171,7 +171,7 @@ def init_students_db_with_few_examples():
     print(f"Inserted {len(df_students)} example students into '{STUDENTS_COLLECTION}' collection.")
 
 
-def _ensure_student_exists(student_id: str, name: str, course: str) -> None:
+def _ensure_student_exists(name: str, course: str, student_id: str = np.random.randint(1000, 9999999)) -> None:
     """
     Ensure a test student with a minimal schema exists in the students_db collection.
     If not found, create it with a single empty course history.
@@ -198,7 +198,7 @@ def _ensure_student_exists(student_id: str, name: str, course: str) -> None:
                 item_id=student_id,
                 new_metadata=payload,
             )
-        return
+        return student_id
 
     # Create new record using index_df (no embeddings needed)
     df = pd.DataFrame([{
@@ -242,7 +242,7 @@ def _test_common_get_student_course_status():
     """
     student_id = "TEST_STUDENT_001"
     course = "Math"
-    _ensure_student_exists(student_id, name="Testy McTestface", course=course)
+    student_id = _ensure_student_exists(student_id, name="Testy McTestface", course=course)
 
     res = get_student_course_status(student_id=student_id, course=course)
     assert isinstance(res, dict) and res.get("student_id") == student_id and res.get("course") == course, \
@@ -266,7 +266,7 @@ def _test_common_update_student_course_status():
     """
     student_id = "TEST_STUDENT_001"
     course = "Math"
-    _ensure_student_exists(student_id, name="Testy McTestface", course=course)
+    student_id = _ensure_student_exists(student_id, name="Testy McTestface", course=course)
 
     before_len = _course_history_len(student_id, course)
 

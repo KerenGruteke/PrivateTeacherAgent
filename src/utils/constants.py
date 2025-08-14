@@ -21,3 +21,6 @@ EMBEDDING_DIM = 1536
 # QDRANT DB
 QDRANT_CLUSTER_URL = "https://23beef8e-a598-4086-8a43-360a6973c7e3.us-west-2-0.aws.cloud.qdrant.io:6333"
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+
+# Course
+VALID_COURSES = ["Math", "History", "Science", "SAT"]

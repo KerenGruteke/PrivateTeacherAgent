@@ -16,7 +16,6 @@ from src.agent.prompts import (
 from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
 from src.utils.LLM_utils import SystemMessage, HumanMessage
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
-from src.utils.helper_function import json_parser
 from src.data.index_and_search import get_db_object, COURSE_TO_COLLECTION_NAME
 from src.agent.student_evaluator import get_student_course_status
 
@@ -160,7 +159,6 @@ def generate_question_agent(request: str, student_id: str) -> str:
         "provenance": "doc ids or urls"
     }
     """
-    llm = get_model()
 
     # Expand request by notes of student
     course = infer_course_from_request(request)
@@ -176,7 +174,7 @@ def generate_question_agent(request: str, student_id: str) -> str:
 
     agent = initialize_agent(
         tools=tools,
-        llm=llm,
+        llm=get_model(),
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
         verbose=True,
         max_iterations=4,                 # hard stop to avoid loops

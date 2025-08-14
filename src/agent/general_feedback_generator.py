@@ -1,10 +1,9 @@
-from functools import cached_property
+from functools import lru_cache
 
 from src.agent.prompts import FINAL_FEEDBACK_SYSTEM_PROMPT, FINAL_FEEDBACK_USER_PROMPT
 from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
 from src.utils.LLM_utils import SystemMessage, HumanMessage
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
-from src.utils.helper_function import json_parser
 from src.agent.student_evaluator import update_student_course_status
 
 
