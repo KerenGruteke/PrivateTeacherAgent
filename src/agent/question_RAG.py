@@ -163,6 +163,8 @@ def generate_question_agent(request: str=None , student_id: str=None, **kwargs) 
     # Expand request by notes of student
     course = infer_course_from_request(request)
     student_evaluation_notes = get_student_course_status(student_id, course)
+    to_print = str(student_evaluation_notes).replace('\\n', '\n')
+    print(f"✅ Student evaluation notes: {to_print}")
     request = f"Request:\n{request}\nEvaluation Notes:\n{student_evaluation_notes}"
 
     # ReAct agents expect a single prompt string; we concatenate system + user parts.
