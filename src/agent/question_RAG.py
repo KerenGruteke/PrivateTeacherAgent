@@ -162,10 +162,8 @@ def generate_question_agent(request: str, student_id: str) -> str:
     """
     llm = get_model()
 
-    # infer course
-    course = infer_course_from_request(request)
-
     # Expand request by notes of student
+    course = infer_course_from_request(request)
     student_evaluation_notes = get_student_course_status(student_id, course)
     request = f"Request:\n{request}\nEvaluation Notes:\n{student_evaluation_notes}"
 

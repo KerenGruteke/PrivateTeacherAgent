@@ -1,4 +1,4 @@
-from functools import cached_property, lru_cache
+from functools import cached_property
 
 from src.agent.prompts import FINAL_FEEDBACK_SYSTEM_PROMPT, FINAL_FEEDBACK_USER_PROMPT
 from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
