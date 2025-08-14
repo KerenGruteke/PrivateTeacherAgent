@@ -133,10 +133,10 @@ For full size examples, please refer to the directory `examples`.
       - index_and_search.py         
    - utils/
 - tokens_count/            
-```
+
 
 ## 🗂️ Additional Description Per Path
-
+```
 ### `src/agent/`
 | Path | Description |
 |------|-------------|
