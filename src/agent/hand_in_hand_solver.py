@@ -1,18 +1,15 @@
-from functools import cached_property
+from functools import cached_property, lru_cache
 
-from src.agent.prompts import EVALUATE_ANSWER_SYSTEM_PROMPT, EVALUATE_ANSWER_USER_PROMPT
+from src.agent.prompts import INITIALIZE_HAND_IN_HAND_SYSTEM_PROMPT, INITIALIZE_HAND_IN_HAND_USER_PROMPT
 from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
-from src.utils.LLM_utils import SystemMessage, HumanMessage
-from src.utils.LLM_utils import LoggingAzureChatOpenAI, get_embedding_object
-from src.utils.helper_function import json_parser
+from src.utils.LLM_utils import LoggingAzureChatOpenAI
 from src.data.index_and_search import get_db_object
 from langchain.agents import initialize_agent, Tool
-from langchain.tools import DuckDuckGoSearchRun
 from langchain.agents.agent_types import AgentType
 from src.agent.answer_evaluator import evaluate_answer
 
 
-@cached_property
+@lru_cache(maxsize=1)
 def get_model():
     llm = LoggingAzureChatOpenAI(
         agent_name="HAND_IN_HAND",
@@ -25,10 +22,39 @@ def get_model():
     return llm
 
 
-def get_student_answer(question):
-     return str(input(question))
+def get_student_answer(question: str):
+    """
+    Tool Name: Get Student Answer
+    Description:
+        Prompts the student to provide an answer to a given sub-question.
+        This tool is intended to be used interactively during step-by-step
+        guidance, where the AI tutor breaks the main question into smaller
+        sub-questions and collects answers from the student.
 
-def get_common_mistakes(course, question):
+    Args:
+        question (str): The sub-question to ask the student.
+
+    Returns:
+        str: The student's answer as plain text.
+    """
+    return str(input(f"\nQuestion: {question}\nWrite your answer here: "))
+
+
+def get_common_mistakes(course: str=None, question: str=None, **kwargs):
+    """
+    Tool Name: Get Common Mistakes
+    Description:
+        Searches the 'common_mistakes' database for errors frequently made in
+        similar questions from the specified course. Intended to help the tutor
+        identify where students typically struggle and provide targeted feedback.
+
+    Args:
+        course (str): The name of the course the question belongs to.
+        question (str): The specific question or sub-question text.
+
+    Returns:
+        list[str]: A list of common mistakes relevant to the question.
+    """
     qid = f"course: {course}\nQuestion: {question}"
 
     relevant_mistakes = get_db_object().search_by_query_vec(
@@ -37,7 +63,11 @@ def get_common_mistakes(course, question):
         top_k=3
     )
 
-    common_mistakes = [mistake for q_mistakes in relevant_mistakes for mistake in q_mistakes["common mistakes"]]
+    common_mistakes = [
+        mistake
+        for q_mistakes in relevant_mistakes
+        for mistake in q_mistakes["common_mistakes"]
+    ]
     return common_mistakes
 
 
@@ -46,46 +76,77 @@ tools = [
     Tool(
         name="Get Student Answer",
         func=get_student_answer,
-        description="Get Student Answer For Current Sub Question"  # TODO: Add description
+        description=("Prompts the student to provide an answer to the current sub-question. "
+                    "Returns the student's answer as a string."
+        )
     ),
     Tool(
-        name="Evaluate Student Answer",
+        name="Answer Evaluator",
         func=evaluate_answer,
-        description="" #TODO: Add description
+        description=(
+            "Evaluate a student's answer against the reference solution. "
+            "Returns JSON with correctness, score (0–1), feedback, common_mistakes. "
+            "Also logs/merges common mistakes into the 'common_mistakes' DB for future use."
+        ),
     ),
     Tool(
         name="Get Common Mistakes",
         func=get_common_mistakes,
-        description="You can search for common mistakes in similar question to better analyze where students struggles"
+        description=(
+            "Searches the 'common_mistakes' database for errors frequently made "
+            "in similar questions from the same course. Returns a list of "
+            "common mistakes to aid in diagnosing student difficulties."
+        )
     )
 ]
 
-def hand_in_hand_agent(course, question, solution, student_answer):
+def hand_in_hand_agent(course: str = None, question: str = None, solution: str = None, student_answer: str = None, **kwargs):
+    """
+    Interactively guides a student through solving a question step-by-step and evaluates their answers.
+
+    This function initializes a Hand-in-Hand agent that:
+    1. Breaks a question into smaller sub-steps.
+    2. Guides the student interactively through each sub-step.
+    3. Uses the Answer Evaluator to assess the student's answers.
+    4. Provides constructive feedback and suggestions for improvement.
+
+    Args:
+        course (str, optional): Name or identifier of the course.
+        question (str, optional): The main question to solve.
+        solution (str, optional): Reference solution for evaluation.
+        student_answer (str, optional): The student's initial answer.
+        **kwargs: Additional keyword arguments for extensibility.
+
+    Returns:
+        str: The agent's response including step-by-step guidance and evaluation.
+    """
     llm = get_model()
 
     agent = initialize_agent(
         tools=tools,
         llm=llm,
-        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, #TODO: Check what is and how is affect
+        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
         verbose=True,
     )
 
-    messages = (
-        [
-            SystemMessage(
-                content=EVALUATE_ANSWER_SYSTEM_PROMPT
-            ),
+    prompt = INITIALIZE_HAND_IN_HAND_SYSTEM_PROMPT + "\n" + \
+             INITIALIZE_HAND_IN_HAND_USER_PROMPT.format(
+                 course=course,
+                 question=question,
+                 reference_solution=solution,
+                 student_answer=student_answer
+             )
 
-            HumanMessage(
-                content=EVALUATE_ANSWER_USER_PROMPT.format(
-                    course=course,
-                    question=question,
-                    solution=solution,
-                    student_answer=student_answer,
-                )
-            )
-        ]
-    )
+    response = agent.run(prompt)
+    return response
 
-    response = agent.run(messages)
-    return response.content
+
+
+if __name__ == "__main__":
+    course = "Math"
+    question = "Solve for x: 2x + 3 = 7"
+    solution = "x = 2"
+    student_answer = "x = 5"
+
+    result = hand_in_hand_agent(course, question, solution, student_answer)
+    print("\nFinal Output:\n", result)

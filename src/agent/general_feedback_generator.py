@@ -5,12 +5,10 @@ from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API
 from src.utils.LLM_utils import SystemMessage, HumanMessage
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 from src.utils.helper_function import json_parser
-from src.data.index_and_search import get_db_object
-from langchain.agents import initialize_agent, Tool
-from langchain.agents.agent_types import AgentType
 from src.agent.student_evaluator import update_student_course_status
 
-@cached_property
+
+@lru_cache(maxsize=1)
 def get_model():
     llm = LoggingAzureChatOpenAI(
         agent_name="FINAL_FEEDBACK",
@@ -18,37 +16,61 @@ def get_model():
         azure_endpoint=AZURE_OPENAI_ENDPOINT,
         openai_api_version=API_VERSION,
         openai_api_type="azure",
-        temperature=0.7,
+        temperature=0,
     )
     return llm
 
 
-tools = [
-        Tool(
-        name="Update Student Course Status",
-        func=update_student_course_status,
-        description="Convert qualitative session feedback into a structured status update and store it in the student DB.",
-    ),
-]
+def final_feedback(session_summary:str=None, student_id:str=None, course:str=None, **kwargs):
+    """
+    Generate supportive final feedback for a student session and update their course status.
+
+    Uses an LLM to create personalized feedback based on the session summary, student ID,
+    course, and topic. Feedback is printed and stored in the student database.
+
+    Args:
+        session_summary (str, optional): Summary of the learning session.
+        student_id (str, optional): Student's unique identifier.
+        course (str, optional): Course name or ID.
+
+    Returns:
+        dict: Parsed JSON output from the LLM with keys like "feedback" and "suggestions".
+    """
+    llm = get_model()
+
+    messages = [
+        SystemMessage(content=FINAL_FEEDBACK_SYSTEM_PROMPT),
+        HumanMessage(content=FINAL_FEEDBACK_USER_PROMPT.format(
+            course=course,
+            session_summary=session_summary
+        ))
+    ]
+
+    response = llm(messages)
+    feedback_session = response.content
+    print(feedback_session)
+    update_student_course_status(student_id, course, feedback_session)
+
+    return feedback_session
 
 
-def final_feedback(messages, student_id, course):
-    messages.extend(
-        [
-            SystemMessage(
-                content=FINAL_FEEDBACK_SYSTEM_PROMPT
-            ),
+if __name__ == "__main__":
+    session_summary = (
+        "During the session, the student practiced solving quadratic equations using the quadratic formula. "
+        "They improved in remembering all parts of the solution and in simplifying square roots. "
+        "Overall, their problem-solving approach became more consistent over the exercises."
+    )
+    student_id = "s001"
+    course = "Math"
+    topic = "Quadratic Equations"
 
-            HumanMessage(
-                content=FINAL_FEEDBACK_USER_PROMPT
-            )
-        ]
+    # Call the final_feedback tool
+    feedback_output = final_feedback(
+        session_summary=session_summary,
+        student_id=student_id,
+        course=course,
     )
 
-    response = get_model.genearte(messages)
-    json_output = json_parser(response.content)
-
-    print(json_output["feedback"])
-    update_student_course_status(student_id, course, json_output["feedback"])
-
-    return response.content
+    # Print the output
+    print("\n--- Final Feedback ---")
+    print(feedback_output)
