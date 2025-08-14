@@ -8,7 +8,12 @@ from langchain.agents.agent_types import AgentType
 from src.agent.coacher import get_coacher_response
 from src.agent.question_RAG import generate_question_agent
 from src.agent.answer_evaluator import evaluate_answer
-from src.agent.student_evaluator import get_student_course_status
+from src.agent.hand_in_hand_solver import hand_in_hand_agent
+from src.agent.prompts import (
+    WELCOME_PROMPT,
+    INITIALIZE_MAIN_PRIVATE_TEACHER_SYSTEM_PROMPT,
+    INITIALIZE_MAIN_PRIVATE_TEACHER_USER_PROMPT
+)
 
 load_dotenv()
 MAIN_PRIVATE_AGENT="MAIN_PRIVATE_AGENT"
@@ -23,6 +28,21 @@ llm = LoggingAzureChatOpenAI(
     temperature=0,
 )
 
+def get_student_answer(question: str):
+    """
+    Tool Name: Get Student Answer
+    Description:
+        Prompts the student to provide an answer to a given question.
+        This tool is intended to be used interactively during student interaction
+        where the AI tutor persent the question to the student collects answers from the student.
+
+    Args:
+        question (str): The question to ask the student.
+
+    Returns:
+        str: The student's answer as plain text.
+    """
+    return str(input(f"\nQuestion: {question}\nWrite your answer here: "))
 
 # 2. Define tools
 tools = [
@@ -37,12 +57,28 @@ tools = [
         )
     ),
     Tool(
+        name="Get Student Answer",
+        func=get_student_answer,
+        description=("Prompts the student to provide an answer to the current sub-question. "
+                     "Returns the student's answer as a string."
+                     )
+    ),
+    Tool(
         name="Answer Evaluator",
         func=evaluate_answer,
         description=(
             "Evaluate a student's answer against the reference solution. "
             "Returns JSON with correctness, score (0–1), feedback, common_mistakes. "
             "Also logs/merges common mistakes into the 'common_mistakes' DB for future use."
+        ),
+    ),
+    Tool(
+        name="Hand In Hand",
+        func=hand_in_hand_agent,
+        description=(
+            "An interactive tutoring tool that guides a student through a question step-by-step. "
+            "It breaks the question into smaller sub-steps, evaluates the student's answers, "
+            "and provides constructive, personalized feedback to help the student improve."
         ),
     ),
     Tool(
@@ -65,6 +101,15 @@ agent = initialize_agent(
     verbose=True,
 )
 
+prompt = INITIALIZE_HAND_IN_HAND_SYSTEM_PROMPT + "\n" + \
+         INITIALIZE_HAND_IN_HAND_USER_PROMPT.format(
+             course=course,
+             question=question,
+             reference_solution=solution,
+             student_answer=student_answer
+         )
+
+print(WELCOME_PROMPT)
 # 4. Run the agent
 question = "What is the population of Paris, and what is the square root of that number?"
 response = agent.run(question)

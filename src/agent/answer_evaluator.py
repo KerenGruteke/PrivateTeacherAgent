@@ -31,7 +31,7 @@ def _dedupe(seq: List[str]) -> List[str]:
     return list(dict.fromkeys([s for s in seq if isinstance(s, str) and s.strip()]))
 
 
-def evaluate_answer(student_answer: str, solution: str, question: str, course: str) -> str:
+def evaluate_answer(student_answer: str=None, solution: str=None, question: str=None, course: str=None, **kwargs) -> str:
     """
     Evaluate a student's answer against the reference solution and (optionally) log common mistakes.
 
