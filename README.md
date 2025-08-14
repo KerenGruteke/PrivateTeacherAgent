@@ -41,6 +41,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
   - `hand_in_hand_agent` — Guides the student step-by-step.
   - `get_coacher_response` — Sends motivational messages.
   - `provide_final_feedback` — Summarizes the session.
+      -  Uses an additional agent tool `student_evaluator/update_student_course_status` - Updates the student's course status and progress.
 
 ### Prompt Library (`prompts.py`)
 - **Course prompts** — Guidelines for structuring questions in Math, Science, History, SAT.
