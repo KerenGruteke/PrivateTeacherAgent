@@ -4,9 +4,7 @@ import os
 dotenv.load_dotenv()
 
 # Mode
-DEBUG_MODE = False
-
-
+DEBUG_MODE = True
 
 # LLM 
 OPENAI_API_KEY = os.getenv("API_KEY")  # API key
