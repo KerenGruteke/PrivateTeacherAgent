@@ -116,23 +116,34 @@ For full size examples, please refer to the directory `examples`.
 - tokens_count/            
 ```
 
+## Additional Description Per Path
+
+### `examples/`
 | Path | Description |
 |------|-------------|
 | `examples/` | Example interactions and use cases |
-| `src/agent/answer_evaluator.py` | Answer grading logic |
-| `src/agent/coacher.py` | Motivational message generator |
-| `src/agent/general_feedback_generator.py` | Generates final session feedback |
-| `src/agent/hand_in_hand_solver.py` | Step-by-step tutoring agent |
-| `src/agent/main_private_teacher.py` | Main ReAct agent setup and tools |
-| `src/agent/prompts.py` | Prompt templates for all sub-agents/tools |
-| `src/agent/question_RAG.py` | Question generator with DB/Web search |
-| `src/agent/run.py` | Entry point for running the private teacher |
-| `src/agent/student_evaluator.py` | Updates student course status |
-| `src/data/DB_questions/` | Data and preprocessing before index to Qdrant |
-| `src/data/History/` | History-related DB content |
-| `src/data/Math/` | Math-related DB content |
-| `src/data/SAT/` | SAT-related DB content |
-| `src/data/Science/` | Science-related DB content |
-| `src/data/index_and_search.py` | Indexing and searching utilities for questions |
-| `src/utils/` | Helper utilities |
-| `tokens_count/` | Required for submitting total tokens |
+
+### `src/agent/`
+| Path | Description |
+|------|-------------|
+| `answer_evaluator.py` | Answer grading logic |
+| `coacher.py` | Motivational message generator |
+| `general_feedback_generator.py` | Generates final session feedback |
+| `hand_in_hand_solver.py` | Step-by-step tutoring agent |
+| `main_private_teacher.py` | Main ReAct agent setup and tools |
+| `prompts.py` | Prompt templates for all sub-agents/tools |
+| `question_RAG.py` | Question generator with DB/Web search |
+| `run.py` | Entry point for running the private teacher |
+| `student_evaluator.py` | Updates student course status |
+
+### `src/data/`
+| Path | Description |
+|------|-------------|
+| `DB_questions/` | Data and preprocessing before index to Qdrant |
+| `History/` | History-related DB content |
+| `Math/` | Math-related DB content |
+| `SAT/` | SAT-related DB content |
+| `Science/` | Science-related DB content |
+| `index_and_search.py` | Indexing and searching utilities for questions |
+
+
