@@ -1,3 +1,4 @@
+# src/agent/prompts.py
 
 WELCOME_PROMPT = """
 Hi {name}! 👋 I’m your private teacher for today! Ready to help you learn, practice, and improve.

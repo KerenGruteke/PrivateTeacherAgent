@@ -1,88 +1,138 @@
 # Private Teacher Agent
 
-An AI-powered personalized tutor designed to help students prepare for exams by generating questions, evaluating answers, providing feedback, and adapting based on progress.
+## Overview
+**Private Teacher Agent** is an AI-powered tutoring assistant that conducts interactive, personalized lessons in **Math, Science, History, and SAT preparation**.  
+It uses a **main ReAct agent** powered by Azure OpenAI and a collection of **specialized sub-agents/tools** to generate questions, evaluate answers, guide students step-by-step, provide motivational feedback, and track progress across sessions.
+
+The agent adapts its teaching style to the student’s level, uses past performance data to target weaknesses, and runs lessons in a warm, concise, and encouraging manner.
 
 ---
 
 ## Features
-- **Personalized Question Generation** based on user level and topic
-- **Answer Evaluation** using LLM-based reasoning
-- **Conceptual Feedback** to improve learning
-- **Progress Tracking** with adaptive topic suggestion
-- **Multi-tool Integration** (terminal, GUI cursor, retriever)
+
+- **Course selection** — supports `Math`, `Science`, `History`, and `SAT`.
+- **Adaptive question generation** — picks suitable topics and difficulty using past evaluation notes.
+- **Interactive evaluation** — grades answers with constructive feedback.
+- **Step-by-step tutoring** — optional guided solving with error-specific hints.
+- **Motivational nudges** — short, encouraging messages to keep the student engaged.
+- **Final feedback** — summarizes session performance with concrete next steps.
+- **Student progress tracking** — updates course status with a mastery score and notes.
 
 ---
 
-## Tech Stack
-- **LangChain** for orchestration
-- **LLMs** (OpenAI/GPT or similar)
-- **Chroma/FAISS** for vector-based retrieval
-- **Streamlit / CLI** for user interaction (configurable)
-- **Python** (>=3.9)
+## System Architecture
+
+### Main Flow (`src/agent/run.py`)
+1. **Collect student info**  
+   - Name and ID.
+   - Chosen course (validated against allowed courses).
+   - Initial learning request.
+2. **Initialize Main Agent**  
+   - Calls `init_private_teacher()` from `src/agent/main_private_teacher.py`.
+3. **Run interactive loop**  
+   - Agent generates questions, evaluates answers, and adapts the lesson dynamically.
+
+### Main Agent (`src/agent/main_private_teacher.py`)
+- Uses `langchain` ReAct agent with Azure OpenAI.
+- **Tools:**
+  - `generate_question_agent` — Creates course-specific questions using RAG from DB/web sources.
+  - `present_message_to_user` — Displays messages and gets student responses.
+  - `evaluate_answer` — Grades answers and records common mistakes.
+  - `hand_in_hand_agent` — Guides the student step-by-step.
+  - `get_coacher_response` — Sends motivational messages.
+  - `provide_final_feedback` — Summarizes the session.
+
+### Prompt Library (`prompts.py`)
+- **Course prompts** — Guidelines for structuring questions in Math, Science, History, SAT.
+- **System/User prompts** — For question generation, coaching, grading, updating student status, and interactive tutoring.
+- **Lesson orchestration** — Ensures the Main Private Teacher stays in persona, manages flow, and controls when tools are called.
 
 ---
 
-## Setup
+## Installation
 
-1. Clone the repo:
 ```bash
-git clone https://github.com/<your_org>/private-teacher-agent.git
-cd private-teacher-agent
-```
+# Clone repository
+git clone <repo-url>
+cd PrivateTeacherAgent
 
-2. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-3. Add your `.env` file with API keys and configuration:
-```
-OPENAI_API_KEY=...
-```
+You also need to configure your `.env` file:
 
----
-
-## Directory Structure
-```
-private-teacher-agent/
-├── agents/               # Core agent logic and tool routing
-├── tools/                # Terminal, cursor, retriever tool implementations
-├── prompts/              # Prompt templates for each module
-├── chains/               # LangChain chain definitions (questioning, feedback, etc.)
-├── ui/                   # Streamlit or CLI interface
-├── data/                 # Sample data, synthetic questions, etc.
-├── tests/                # Unit and integration tests
-├── README.md             # This file
-├── requirements.txt
-└── .env                  # API keys and configuration
+```env
+OPENAI_API_KEY=your_openai_api_key
+QDRANT_API_KEY=your_qdrant_api_key
+DEBUG_MODE=False # Change to True for debugging
 ```
 
 ---
 
 ## Usage
-To launch the agent interface:
+
+Run the private teacher agent:
+
 ```bash
-streamlit run ui/app.py
-```
-or run in CLI mode:
-```bash
-python ui/cli.py
+python src/agent/run.py
 ```
 
+Example interaction:
+
+```
+Hi! What is your name?  →  Alice
+Nice to meet you, Alice! Please enter an id number:  →  12345
+Hi Alice! 👋 What course would you like to focus on today?
+Please enter one: Math, History, Science, SAT  →  Math
+That's great Alice! Do you have any specific topics or requests in mind?  →  Algebra equations
+...
+```
+For full size examples, please refer to the directory `examples`.
+
 ---
 
-## Contribution
-We welcome contributions! Please:
-- Open issues for bugs or feature suggestions
-- Fork and create pull requests for code changes
+## Project Structure
+- examples/                       
+- src/
+   - agent/
+      - answer_evaluator.py
+      - coacher.py
+      - general_feedback_generator.py
+      - hand_in_hand_solver.py      
+      - main_private_teacher.py    
+      - prompts.py             
+      - question_RAG.py            
+      - run.py                   
+      - student_evaluator.py      
+   - data/
+      - DB_questions/             
+      - History/
+         - Math/
+         - SAT/
+         - Science/
+      - index_and_search.py         
+   - utils/
+- tokens_count/            
+```
 
----
-
-## License
-MIT License.
-
----
-
-## Acknowledgments
-This project was created as part of the Multi AI Agent course assignment.
-Special thanks to all dataset providers and open-source maintainers.
+| Path | Description |
+|------|-------------|
+| `examples/` | Example interactions and use cases |
+| `src/agent/answer_evaluator.py` | Answer grading logic |
+| `src/agent/coacher.py` | Motivational message generator |
+| `src/agent/general_feedback_generator.py` | Generates final session feedback |
+| `src/agent/hand_in_hand_solver.py` | Step-by-step tutoring agent |
+| `src/agent/main_private_teacher.py` | Main ReAct agent setup and tools |
+| `src/agent/prompts.py` | Prompt templates for all sub-agents/tools |
+| `src/agent/question_RAG.py` | Question generator with DB/Web search |
+| `src/agent/run.py` | Entry point for running the private teacher |
+| `src/agent/student_evaluator.py` | Updates student course status |
+| `src/data/DB_questions/` | Data and preprocessing before index to Qdrant |
+| `src/data/History/` | History-related DB content |
+| `src/data/Math/` | Math-related DB content |
+| `src/data/SAT/` | SAT-related DB content |
+| `src/data/Science/` | Science-related DB content |
+| `src/data/index_and_search.py` | Indexing and searching utilities for questions |
+| `src/utils/` | Helper utilities |
+| `tokens_count/` | Required for submitting total tokens |

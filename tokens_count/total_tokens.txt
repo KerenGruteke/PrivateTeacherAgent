@@ -1,0 +1,12 @@
+----- Number of Tokens --------
+Embedding 
+ Total input tokens: 4619147 
+ Total output tokens: 0
+Not Embedding 
+ Total input tokens: 813457 
+ Total output tokens: 51050
+
+----- Prices --------
+Not Embedding - Total cost: 2.5441425
+Embedding - Total cost: 0.09238294
+Total cost (both): 2.64
