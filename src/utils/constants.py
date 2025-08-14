@@ -3,6 +3,11 @@ import os
 
 dotenv.load_dotenv()
 
+# Mode
+DEBUG_MODE = False
+
+
+
 # LLM 
 OPENAI_API_KEY = os.getenv("API_KEY")  # API key
 CHAT_DEPLOYMENT_NAME = "team9-gpt4o"

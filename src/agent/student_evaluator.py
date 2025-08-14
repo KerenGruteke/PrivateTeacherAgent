@@ -171,7 +171,7 @@ def init_students_db_with_few_examples():
     print(f"Inserted {len(df_students)} example students into '{STUDENTS_COLLECTION}' collection.")
 
 
-def _ensure_student_exists(name: str, course: str, student_id: str = np.random.randint(1000, 9999999)) -> None:
+def _ensure_student_exists(name: str, course: str, student_id: str) -> None:
     """
     Ensure a test student with a minimal schema exists in the students_db collection.
     If not found, create it with a single empty course history.
@@ -214,6 +214,7 @@ def _ensure_student_exists(name: str, course: str, student_id: str = np.random.r
         id_col="student_id",
         collection_name=STUDENTS_COLLECTION,
     )
+    return student_id
 
 
 def _course_history_len(student_id: str, course: str) -> int:

@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from langchain.tools import DuckDuckGoSearchRun
+from langchain_community.tools import DuckDuckGoSearchRun
 from langchain.agents import initialize_agent, Tool
 from langchain.agents.agent_types import AgentType
 
@@ -13,7 +13,7 @@ from src.agent.prompts import (
     INFER_course_USER_PROMPT,
     course_GUIDELINES_PROMPTS_DICT,
 )
-from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
+from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION, DEBUG_MODE
 from src.utils.LLM_utils import SystemMessage, HumanMessage
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 from src.data.index_and_search import get_db_object, COURSE_TO_COLLECTION_NAME
@@ -137,7 +137,7 @@ tools = [
 # -------------------------------------
 # Agent entry point
 # -------------------------------------
-def generate_question_agent(request: str, student_id: str) -> str:
+def generate_question_agent(request: str=None , student_id: str=None, **kwargs) -> str:
     """
     Runs a ReAct agent to generate a question based on the user request. It uses an Search_in_DB tool
     and may also use an external web search tool if necessary.
@@ -176,7 +176,7 @@ def generate_question_agent(request: str, student_id: str) -> str:
         tools=tools,
         llm=get_model(),
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True,
+        verbose=DEBUG_MODE,
         max_iterations=4,                 # hard stop to avoid loops
         early_stopping_method="generate", # end gracefully if unsure
         handle_parsing_errors=True,       # more resilient formatting

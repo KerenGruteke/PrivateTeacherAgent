@@ -22,7 +22,7 @@ def get_model() -> LoggingAzureChatOpenAI:
     )
 
 
-def get_coacher_response(student_state: str) -> None:
+def get_coacher_response(student_state: str) -> str:
     """
     Generate and print a short, student-facing motivational message tailored to the student's state.
 
@@ -34,8 +34,8 @@ def get_coacher_response(student_state: str) -> None:
 
     Returns
     -------
-    None
-        This function directly prints the message; it does not return anything.
+    str
+        A motivational message tailored to the student's state.
     """
     messages = [
         SystemMessage(content=COACHER_SYSTEM_PROMPT),
@@ -43,7 +43,7 @@ def get_coacher_response(student_state: str) -> None:
     ]
     resp = get_model()(messages)
     message = getattr(resp, "content", str(resp)).strip()
-    print(message)
+    return message
 
 
 if __name__ == "__main__":

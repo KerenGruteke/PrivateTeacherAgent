@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from functools import lru_cache
-from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
+from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION, DEBUG_MODE
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 
 from langchain.agents import initialize_agent, Tool
@@ -73,9 +73,9 @@ tools = [
         name="Coacher",
         func=get_coacher_response,
         description=(
-        "Produce and print a short, student-friendly motivational message based on the provided student_state. "
+        "Produce and a short, student-friendly motivational message based on the provided student_state. "
         "Use this to encourage the learner, explain the value of the current course, or suggest a tiny next step. "
-        "This tool does not return text — it prints directly for the student."
+        "You should use this message and give it to the student."
         ),
     ),
     
@@ -89,7 +89,8 @@ def init_private_teacher(student_id, course, user_message):
         tools=tools,
         llm=get_model(),
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True,
+        verbose=DEBUG_MODE,
+        handle_parsing_errors=True,       # more resilient formatting
     )
 
     prompt = INITIALIZE_MAIN_PRIVATE_TEACHER_SYSTEM_PROMPT + "\n" + \

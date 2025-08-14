@@ -1,7 +1,7 @@
 from functools import cached_property, lru_cache
 
 from src.agent.prompts import INITIALIZE_HAND_IN_HAND_SYSTEM_PROMPT, INITIALIZE_HAND_IN_HAND_USER_PROMPT
-from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION
+from src.utils.constants import CHAT_DEPLOYMENT_NAME, AZURE_OPENAI_ENDPOINT, API_VERSION, DEBUG_MODE
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 from src.data.index_and_search import get_db_object
 from langchain.agents import initialize_agent, Tool
@@ -126,7 +126,7 @@ def hand_in_hand_agent(course: str = None, question: str = None, solution: str =
         tools=tools,
         llm=llm,
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True,
+        verbose=DEBUG_MODE,
     )
 
     prompt = INITIALIZE_HAND_IN_HAND_SYSTEM_PROMPT + "\n" + \
