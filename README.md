@@ -71,6 +71,7 @@ QDRANT_API_KEY=your_qdrant_api_key
 ---
 
 ## ▶️ Usage
+### Run!
 
 Run the private teacher agent:
 
