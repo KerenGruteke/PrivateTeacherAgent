@@ -66,7 +66,6 @@ You also need to configure your `.env` file:
 ```env
 OPENAI_API_KEY=your_openai_api_key
 QDRANT_API_KEY=your_qdrant_api_key
-DEBUG_MODE=False # Change to True for debugging
 ```
 
 ---
@@ -109,6 +108,13 @@ Do you have any specific topics or requests in mind?
 ...
 ```
 For full size examples, please refer to the directory `examples`.
+
+### Debug
+Change config in `src/utils/constants.py` and run again.
+```
+DEBUG_MODE=True
+```
+
 
 ---
 
