@@ -49,6 +49,6 @@ def final_feedback(messages, student_id, course):
     json_output = json_parser(response.content)
 
     print(json_output["feedback"])
-    update_student_level(student_id, course, json_output["feedback"])
+    update_student_course_status(student_id, course, json_output["feedback"])
 
     return response.content
