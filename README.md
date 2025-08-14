@@ -1,6 +1,6 @@
-# Private Teacher Agent
+# 📚🤖 Private Teacher Agent 
 
-## Overview
+## 📝 Overview
 **Private Teacher Agent** is an AI-powered tutoring assistant that conducts interactive, personalized lessons in **Math, Science, History, and SAT preparation**.  
 It uses a **main ReAct agent** powered by Azure OpenAI and a collection of **specialized sub-agents/tools** to generate questions, evaluate answers, guide students step-by-step, provide motivational feedback, and track progress across sessions.
 
@@ -8,7 +8,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ---
 
-## Features
+## ✨ Features
 
 - **Course selection** — supports `Math`, `Science`, `History`, and `SAT`.
 - **Adaptive question generation** — picks suitable topics and difficulty using past evaluation notes.
@@ -20,7 +20,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ---
 
-## System Architecture
+## 🏗️ System Architecture
 
 ### Main Flow (`src/agent/run.py`)
 1. **Collect student info**  
@@ -49,7 +49,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ---
 
-## Installation
+## 💻 Installation
 
 ```bash
 # Clone repository
@@ -70,7 +70,7 @@ DEBUG_MODE=False # Change to True for debugging
 
 ---
 
-## Usage
+## ▶️ Usage
 
 Run the private teacher agent:
 
@@ -81,18 +81,37 @@ python src/agent/run.py
 Example interaction:
 
 ```
-Hi! What is your name?  →  Alice
-Nice to meet you, Alice! Please enter an id number:  →  12345
-Hi Alice! 👋 What course would you like to focus on today?
-Please enter one: Math, History, Science, SAT  →  Math
-That's great Alice! Do you have any specific topics or requests in mind?  →  Algebra equations
+📚🤖 AI Teacher:
+Hi! What is your name?
+
+🎓 Student: Ben
+
+📚🤖 AI Teacher:
+Nice to meet you, Ben! Please enter an id number:
+
+🎓 Student: 12345
+
+📚🤖 AI Teacher:
+
+Hi Ben! 👋 I’m your private teacher for today! Ready to help you learn, practice, and improve.
+My main areas of expertise are Math, History, Science, and SAT questions.
+
+What course would you like to focus on today?
+Please enter one of the following options: Math, History, Science, SAT
+
+🎓 Student: Math
+
+📚🤖 AI Teacher:
+
+That's great Ben! Lets study today a bit of Math.
+Do you have any specific topics or requests in mind?
 ...
 ```
 For full size examples, please refer to the directory `examples`.
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 - examples/                       
 - src/
    - agent/
@@ -114,10 +133,10 @@ For full size examples, please refer to the directory `examples`.
       - index_and_search.py         
    - utils/
 - tokens_count/            
+
+
+## 🗂️ Additional Description Per Path
 ```
-
-## Additional Description Per Path
-
 ### `src/agent/`
 | Path | Description |
 |------|-------------|
