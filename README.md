@@ -22,7 +22,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ## 🏗️ System Architecture
 
-### Main Flow (`src/agent/run.py`)
+### Main Flow (`src/run.py`)
 1. **Collect student info**  
    - Name and ID.
    - Chosen course (validated against allowed courses).
@@ -130,7 +130,6 @@ DEBUG_MODE=True
       - main_private_teacher.py    
       - prompts.py             
       - question_RAG.py            
-      - run.py                   
       - student_evaluator.py      
    - data/
       - DB_questions/             
@@ -140,6 +139,7 @@ DEBUG_MODE=True
          - Science/
       - index_and_search.py         
    - utils/
+   - run.py                   
 - tokens_count/            
 
 
