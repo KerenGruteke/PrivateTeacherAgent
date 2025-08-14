@@ -1,6 +1,6 @@
 # 📚🤖 Private Teacher Agent 
 
-## Overview
+## 📝 Overview
 **Private Teacher Agent** is an AI-powered tutoring assistant that conducts interactive, personalized lessons in **Math, Science, History, and SAT preparation**.  
 It uses a **main ReAct agent** powered by Azure OpenAI and a collection of **specialized sub-agents/tools** to generate questions, evaluate answers, guide students step-by-step, provide motivational feedback, and track progress across sessions.
 
@@ -8,7 +8,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ---
 
-## Features
+## ✨ Features
 
 - **Course selection** — supports `Math`, `Science`, `History`, and `SAT`.
 - **Adaptive question generation** — picks suitable topics and difficulty using past evaluation notes.
@@ -20,7 +20,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ---
 
-## System Architecture
+## 🏗️ System Architecture
 
 ### Main Flow (`src/agent/run.py`)
 1. **Collect student info**  
@@ -49,7 +49,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ---
 
-## Installation
+## 💻 Installation
 
 ```bash
 # Clone repository
@@ -70,7 +70,7 @@ DEBUG_MODE=False # Change to True for debugging
 
 ---
 
-## Usage
+## ▶️ Usage
 
 Run the private teacher agent:
 
@@ -111,7 +111,7 @@ For full size examples, please refer to the directory `examples`.
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 - examples/                       
 - src/
    - agent/
@@ -135,7 +135,7 @@ For full size examples, please refer to the directory `examples`.
 - tokens_count/            
 ```
 
-## Additional Description Per Path
+## 🗂️ Additional Description Per Path
 
 ### `src/agent/`
 | Path | Description |
