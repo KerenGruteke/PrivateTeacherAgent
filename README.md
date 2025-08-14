@@ -1,4 +1,4 @@
-# Private Teacher Agent
+# 📚🤖 Private Teacher Agent 
 
 ## Overview
 **Private Teacher Agent** is an AI-powered tutoring assistant that conducts interactive, personalized lessons in **Math, Science, History, and SAT preparation**.  
