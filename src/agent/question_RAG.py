@@ -18,6 +18,7 @@ from src.utils.LLM_utils import SystemMessage, HumanMessage
 from src.utils.LLM_utils import LoggingAzureChatOpenAI
 from src.data.index_and_search import get_db_object, COURSE_TO_COLLECTION_NAME
 from src.agent.student_evaluator import get_student_course_status
+from src.utils.helper_function import json_parser
 
 
 # -------------------------------------
@@ -137,14 +138,15 @@ tools = [
 # -------------------------------------
 # Agent entry point
 # -------------------------------------
-def generate_question_agent(request: str=None , student_id: str=None, **kwargs) -> str:
+def generate_question_agent(student_topic: str=None , student_id: str=None, course: str=None, **kwargs) -> str:
     """
-    Runs a ReAct agent to generate a question based on the user request. It uses an Search_in_DB tool
+    Runs a ReAct agent to generate a question based on the student_topic. It uses a Search_in_DB tool
     and may also use an external web search tool if necessary.
 
     Input: 
-    - User request (str)
+    - Student topic (str)
     - Student ID (str)
+    - Course (str)
     Example: "Can you give me a question about photosynthesis?"
 
     Output: a single JSON object
@@ -161,11 +163,21 @@ def generate_question_agent(request: str=None , student_id: str=None, **kwargs) 
     """
 
     # Expand request by notes of student
-    course = infer_course_from_request(request)
+    # course = infer_course_from_request(request)
+    input_params = json_parser(student_topic)
+    student_topic = input_params["student_topic"]
+    student_id = input_params["student_id"]
+    course = input_params["course"]
+
     student_evaluation_notes = get_student_course_status(student_id, course)
-    to_print = str(student_evaluation_notes).replace('\\n', '\n')
-    print(f"✅ Student evaluation notes: {to_print}")
-    request = f"Request:\n{request}\nEvaluation Notes:\n{student_evaluation_notes}"
+    if "error" not in student_evaluation_notes:
+        if DEBUG_MODE:
+            to_print = str(student_evaluation_notes).replace('\\n', '\n')
+
+            print(f"✅ Student evaluation notes: {to_print}")
+        request = f"Request:\n{student_topic}\nEvaluation Notes:\n{student_evaluation_notes}"
+    else:
+        request = f"Request:\n{student_topic}"
 
     # ReAct agents expect a single prompt string; we concatenate system + user parts.
     prompt_text = (

@@ -163,6 +163,7 @@ Quality rules:
 - The solution must be correct and clearly explained (concise steps for math).
 - Keep length reasonable (question ≤ 120 words; solution ≤ 180 words, unless concise equations are needed).
 - If the Notes mention common errors, design the question to address them; avoid trick questions unrelated to goals.
+- Include any optional answer data from the DB when building the question. For example: A) option_a\nB)option_b ...
 
 When you are done, respond with:
 Final Answer:
@@ -325,15 +326,7 @@ Do not skip any sub-step unless the student's answer is fully correct.
 # ---------------------
 
 FINAL_FEEDBACK_SYSTEM_PROMPT = """
-You are a friendly and supportive learning assistant.
-Your task is to review the provided session summary and topic,
-and produce personalized, encouraging feedback.
-
-Guidelines:
-- Be warm, motivating, and constructive.
-- Highlight improvements during the session.
-- Suggest 2–4 concrete ways to continue practicing the topic.
-- Avoid generic phrases — be specific to progress and challenges.
+You are a friendly, supportive learning assistant. Give concise, personalized feedback in 1–2 sentences, highlighting progress, noting challenges, and suggesting 1–3 concrete next steps.
 """
 
 FINAL_FEEDBACK_USER_PROMPT = """
@@ -342,8 +335,9 @@ Course: {course}
 Session Summary:
 {session_summary}
 
-Using this information, generate the feedback as per the system instructions.
+Generate concise, actionable feedback in 1–2 sentences based on the session summary.
 """
+
 
 # ---------------------------
 # Main Private Teacher Prompt
@@ -366,6 +360,7 @@ OBJECTIVES (per turn)
 4) Decide next step: generate_question_agent, present_message_to_user, evaluate_answer, get_coacher_response, 
     hand_in_hand_agent or provide_final_feedback.
 5) Optionally add a short motivational line (do not say it’s from a coach).
+6) After the user answer correctly, print some message that he will notify and ask the user if he want for another question.
 
 TOOL POLICY (ReAct)
 - FIRST call exactly once: "generate_question_agent" to obtain a suitable question & solution.
@@ -376,7 +371,6 @@ TOOL POLICY (ReAct)
 - Total tool calls per turn should be minimal; never loop.
 - After using the "get_coacher_response" tool, you must provide a new question or prompt to the student.
 - Use provide_final_feedback in the end of the lesson.
-
 """
 
 INITIALIZE_MAIN_PRIVATE_TEACHER_USER_PROMPT = """

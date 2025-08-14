@@ -31,7 +31,7 @@ def get_model() -> LoggingAzureChatOpenAI:
 # ----------------------
 # Tool 1: Get status
 # ----------------------
-def get_student_course_status(student_id: str, course: str) -> Dict[str, Any]:
+def get_student_course_status(student_id: str=None, course: str=None, **kwargs) -> Dict[str, Any]:
     """
     Retrieve the student's historical status entries for a given course.
     """
