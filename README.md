@@ -81,11 +81,30 @@ python src/agent/run.py
 Example interaction:
 
 ```
-Hi! What is your name?  →  Alice
-Nice to meet you, Alice! Please enter an id number:  →  12345
-Hi Alice! 👋 What course would you like to focus on today?
-Please enter one: Math, History, Science, SAT  →  Math
-That's great Alice! Do you have any specific topics or requests in mind?  →  Algebra equations
+📚🤖 AI Teacher:
+Hi! What is your name?
+
+🎓 Student: Ben
+
+📚🤖 AI Teacher:
+Nice to meet you, Ben! Please enter an id number:
+
+🎓 Student: 12345
+
+📚🤖 AI Teacher:
+
+Hi Ben! 👋 I’m your private teacher for today! Ready to help you learn, practice, and improve.
+My main areas of expertise are Math, History, Science, and SAT questions.
+
+What course would you like to focus on today?
+Please enter one of the following options: Math, History, Science, SAT
+
+🎓 Student: Math
+
+📚🤖 AI Teacher:
+
+That's great Ben! Lets study today a bit of Math.
+Do you have any specific topics or requests in mind?
 ...
 ```
 For full size examples, please refer to the directory `examples`.
