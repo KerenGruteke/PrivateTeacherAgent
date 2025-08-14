@@ -1,0 +1,132 @@
+📚🤖 AI Teacher:
+Hi! What is your name?
+
+🎓 Student: Ben
+
+
+📚🤖 AI Teacher:
+Nice to meet you, Ben! Please enter an id number:
+
+🎓 Student: 12345
+
+
+📚🤖 AI Teacher:
+
+Hi Ben! 👋 I’m your private teacher for today! Ready to help you learn, practice, and improve.
+My main areas of expertise are Math, History, Science, and SAT questions.
+
+What course would you like to focus on today?
+Please enter one of the following options: Math, History, Science, SAT
+
+
+🎓 Student: Math
+
+
+📚🤖 AI Teacher:
+
+That's great Ben! Lets study today a bit of Math.
+Do you have any specific topics or requests in mind?
+
+
+🎓 Student: I think probability somthing
+
+
+📚🤖 AI Teacher:
+Here's a probability question for you: 
+
+A bag contains 2 white balls and 3 black balls. Two balls are drawn without replacement. What is the probability of drawing a white ball followed by a black ball?
+
+Hint: Consider the changing total number of balls after the first draw. Take your time, and let me know your answer!"  
+
+
+🎓 Student: hmm 2/4?
+
+
+📚🤖 AI Teacher:
+Your answer of '2/4' is a good attempt, but it's not quite correct. The correct probability is 3/10. Here's how we calculate it: 
+
+The probability of drawing a white ball first is 2/5. After removing one white ball, the probability of drawing a black ball is 3/4. Multiply these probabilities: (2/5) × (3/4) = 6/20 = 3/10.
+
+Remember to adjust the total number of balls after the first draw. Would you like to try another question or go over this concept step-by-step?"  
+
+
+🎓 Student: I dont know, Im so afraid of probability, I failed on my lest test!
+
+
+💖🤖 AI Teacher: It's okay to feel nervous—you're not alone, and one test doesn't define your ability. Probability can feel tricky, but breaking it into small steps makes it manageable. Start by reviewing one key concept today, like independent events, and celebrate that progress. You've got this!
+
+
+🫱🫲🤖 AI Hand In Hand:
+Step 1: What is the probability of drawing a white ball first from the bag? The bag contains 2 white balls and 3 black balls.
+
+🎓 Student: 2/3?
+
+
+🫱🫲🤖 AI Hand In Hand:
+Your answer of 2/3 is incorrect. Remember, probability is calculated as the number of favorable outcomes divided by the total number of outcomes. In this case, there are 2 white balls (favorable outcomes) and a total of 5 balls in the bag. Can you try again to calculate the probability of drawing a white ball first?
+
+🎓 Student: so 2/5?
+
+
+🫱🫲🤖 AI Hand In Hand:
+Correct! The probability of drawing a white ball first is indeed 2/5. Now, let's move to Step 2: After drawing a white ball, what is the probability of drawing a black ball next? Remember, there are now 4 balls left in the bag, including 3 black balls.
+
+🎓 Student: 3/4?
+
+
+🫱🫲🤖 AI Hand In Hand:
+Great job! The probability of drawing a black ball after drawing a white ball is indeed 3/4. Now, let's move to Step 3: How do you calculate the overall probability of both events happening in sequence? Hint: Multiply the probabilities of the two independent events.
+
+🎓 Student: Im not sure, I dont know, maybe 0.3
+
+
+🫱🫲🤖 AI Hand In Hand:
+No problem! To calculate the overall probability of both events happening in sequence, you multiply the probability of the first event by the probability of the second event. In this case, multiply 2/5 (probability of drawing a white ball first) by 3/4 (probability of drawing a black ball next). Can you try multiplying these fractions together?
+
+🎓 Student: 0.2
+
+
+🫱🫲🤖 AI Hand In Hand:
+Good work! The overall probability of drawing a white ball followed by a black ball is indeed 3/10, which can also be expressed as 0.2 in decimal form. Well done! Let's summarize your performance.
+
+🎓 Student: ok
+
+
+🫱🫲🤖 AI Hand In Hand:
+Summary of your performance:  
+1. You initially struggled with identifying the total number of outcomes for the first step but corrected your answer after feedback.  
+2. You correctly calculated the probability for the second step without any issues.  
+3. You were unsure about how to combine probabilities in the final step but understood the process after guidance.  
+
+Key takeaway: Always carefully count the total and favorable outcomes when calculating probabilities. For sequential events, remember to multiply the probabilities of each step.  
+
+Next steps: Practice more problems involving probabilities of sequential events to strengthen your understanding. Great effort today—keep it up!
+
+🎓 Student: ok thanks
+
+
+📚🤖 AI Teacher:
+Great job sticking with it! With a little guidance, you worked through the problem and got it right. Sequential probability can be tricky, but you're improving already. Let's try another question to build your confidence. Ready?"  
+
+
+🎓 Student: a bit simple question
+
+
+📚🤖 AI Teacher:
+Here's a simpler probability question for you:
+
+A fair die is rolled twice. What is the probability of getting two sixes?
+
+Hint: Multiply the probabilities of independent events. Take your time, and let me know your answer!
+
+🎓 Student: 1/36 
+
+
+📚🤖 AI Teacher:
+Excellent work! You got it right—1/36 is the correct probability. Multiplying the probabilities of independent events is key here, and you nailed it. You're doing great! Would you like to try one more question or wrap up for today?"  
+
+
+🎓 Student: wrap up I have to go :(
+
+✅🤖 AI Teacher Feedback:
+You were amazing! Next time we'll work on more complicated problems.

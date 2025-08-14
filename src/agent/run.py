@@ -14,16 +14,20 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", message=".*LangChainDeprecationWarning.*")
 warnings.filterwarnings("ignore", category=PydanticDeprecatedSince20)
 
-if __name__ == "__main__":
+
+def run_private_teacher_agent():
     name = get_student_response("Hi! What is your name?")
     student_id = get_student_response(f"Nice to meet you, {name}! Please enter an id number:")
-    
+
     course = None
     while course not in VALID_COURSES:
         course = get_student_response(WELCOME_PROMPT.format(name=name))
-    
-    student_id = _ensure_student_exists(name="Testy McTestface", course=course, student_id=student_id)
+
+    student_id = _ensure_student_exists(name=name, course=course, student_id=student_id)
     user_message = get_student_response(USER_REQUEST_PROMPT.format(name=name, course=course))
-    
+
     agent, prompt_text = init_private_teacher(student_id, course, user_message)
     agent.run(prompt_text)
+
+if __name__ == "__main__":
+    run_private_teacher_agent()

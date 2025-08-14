@@ -24,7 +24,7 @@ def get_model() -> LoggingAzureChatOpenAI:
 
 def get_coacher_response(student_state: str) -> str:
     """
-    Generate and print a short, student-facing motivational message tailored to the student's state.
+    Prints a short, student-facing motivational message tailored to the student's state.
 
     Parameters
     ----------
@@ -35,7 +35,7 @@ def get_coacher_response(student_state: str) -> str:
     Returns
     -------
     str
-        A motivational message tailored to the student's state.
+        Approval that the coacher message was printed.
     """
     messages = [
         SystemMessage(content=COACHER_SYSTEM_PROMPT),
@@ -43,9 +43,11 @@ def get_coacher_response(student_state: str) -> str:
     ]
     resp = get_model()(messages)
     message = getattr(resp, "content", str(resp)).strip()
-    return message
+    print(f"\n\n💖🤖 AI Teacher: {message}")
+    return "coacher message was printed, now proceed to another question or continue guiding the student solving the current question if needed"
 
 
 if __name__ == "__main__":
     student_state = "Struggling with algebra"
-    get_coacher_response(student_state)
+    message = get_coacher_response(student_state)
+    print(message)

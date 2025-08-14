@@ -13,8 +13,9 @@ from src.agent.prompts import (
     INITIALIZE_MAIN_PRIVATE_TEACHER_SYSTEM_PROMPT,
     INITIALIZE_MAIN_PRIVATE_TEACHER_USER_PROMPT
 )
-from src.utils.user_response import get_student_answer
+from src.utils.user_response import present_message_to_user
 from src.agent.student_evaluator import get_student_course_status
+from src.agent.general_feedback_generator import provide_final_feedback
 
 load_dotenv()
 
@@ -35,7 +36,7 @@ def get_model() -> LoggingAzureChatOpenAI:
 # Define tools
 tools = [
     Tool(
-        name="Question RAG",
+        name="generate_question_agent",
         func=generate_question_agent,
         description=(
             "Generate a practice question and its solution based on the user's request. "
@@ -45,14 +46,12 @@ tools = [
         )
     ),
     Tool(
-        name="Get Student Answer",
-        func=get_student_answer,
-        description=("Prompts the student to provide an answer to the current sub-question. "
-                    "Returns the student's answer as a string."
-                    )
+        name="present_message_to_user",
+        func=present_message_to_user,
+        description=("Present a message to the student and get their reply."),
     ),
     Tool(
-        name="Answer Evaluator",
+        name="evaluate_answer",
         func=evaluate_answer,
         description=(
             "Evaluate a student's answer against the reference solution. "
@@ -61,7 +60,7 @@ tools = [
         ),
     ),
     Tool(
-        name="Hand In Hand",
+        name="hand_in_hand_agent",
         func=hand_in_hand_agent,
         description=(
             "An interactive tutoring tool that guides a student through a question step-by-step. "
@@ -70,14 +69,23 @@ tools = [
         ),
     ),
     Tool(
-        name="Coacher",
+        name="get_coacher_response",
         func=get_coacher_response,
         description=(
         "Produce and a short, student-friendly motivational message based on the provided student_state. "
         "Use this to encourage the learner, explain the value of the current course, or suggest a tiny next step. "
-        "You should use this message and give it to the student."
+        "After using this tool proceed with the student interaction."
         ),
     ),
+    Tool(
+        name="provide_final_feedback",
+        func=provide_final_feedback,
+        description=(
+            "Generate supportive final feedback for a student session "
+            "which is based on a session_summary that you give."
+            "Use this tool in the end of the lesson."
+        )
+    )
     
 ]
 

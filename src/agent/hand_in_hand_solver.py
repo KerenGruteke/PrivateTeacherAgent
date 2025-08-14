@@ -71,17 +71,31 @@ def get_common_mistakes(course: str=None, question: str=None, **kwargs):
     return common_mistakes
 
 
+def present_message_to_user(message: str) -> str:
+    """
+    Tool Name: Present Message to User
+    Description:
+        Displays a message to the student.
+
+    Args:
+        message (str): The message to display to the student.
+
+    Returns:
+        Student reply (could be also empty and then you should continue lead the conversation)
+    """
+    print("\n\n🫱🫲🤖 AI Hand In Hand:") 
+    print(str(message).replace("\\n", "\n"))
+    return str(input("\n🎓 Student: "))
+
 # 2. Define tools
 tools = [
     Tool(
-        name="Get Student Answer",
-        func=get_student_answer,
-        description=("Prompts the student to provide an answer to the current sub-question. "
-                    "Returns the student's answer as a string."
-        )
+        name="present_message_to_user",
+        func=present_message_to_user,
+        description=("Present a message to the student and get their reply."),
     ),
     Tool(
-        name="Answer Evaluator",
+        name="evaluate_answer",
         func=evaluate_answer,
         description=(
             "Evaluate a student's answer against the reference solution. "
@@ -90,7 +104,7 @@ tools = [
         ),
     ),
     Tool(
-        name="Get Common Mistakes",
+        name="get_common_mistakes",
         func=get_common_mistakes,
         description=(
             "Searches the 'common_mistakes' database for errors frequently made "
@@ -104,10 +118,10 @@ def hand_in_hand_agent(course: str = None, question: str = None, solution: str =
     """
     Interactively guides a student through solving a question step-by-step and evaluates their answers.
 
-    This function initializes a Hand-in-Hand agent that:
+    This function initializes a hand_in_hand_agent that:
     1. Breaks a question into smaller sub-steps.
     2. Guides the student interactively through each sub-step.
-    3. Uses the Answer Evaluator to assess the student's answers.
+    3. Uses the evaluate_answer tool to assess the student's answers.
     4. Provides constructive feedback and suggestions for improvement.
 
     Args:

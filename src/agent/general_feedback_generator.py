@@ -20,7 +20,7 @@ def get_model():
     return llm
 
 
-def final_feedback(session_summary:str=None, student_id:str=None, course:str=None, **kwargs):
+def provide_final_feedback(session_summary:str=None, student_id:str=None, course:str=None, **kwargs):
     """
     Generate supportive final feedback for a student session and update their course status.
 
@@ -47,7 +47,8 @@ def final_feedback(session_summary:str=None, student_id:str=None, course:str=Non
 
     response = llm(messages)
     feedback_session = response.content
-    print(feedback_session)
+    print("\n\n✅🤖 AI Teacher Feedback:\t")
+    print(str(feedback_session).replace("\\n", "\n"))
     update_student_course_status(student_id, course, feedback_session)
 
     return feedback_session
@@ -64,7 +65,7 @@ if __name__ == "__main__":
     topic = "Quadratic Equations"
 
     # Call the final_feedback tool
-    feedback_output = final_feedback(
+    feedback_output = provide_final_feedback(
         session_summary=session_summary,
         student_id=student_id,
         course=course,

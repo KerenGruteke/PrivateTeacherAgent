@@ -1,20 +1,22 @@
-def present_question(question: str) -> str:
+
+
+def present_message_to_user(message: str) -> str:
     """
-    Tool Name: Get Student Answer
+    Tool Name: Present Message to User
     Description:
-        Prompts the student to provide an answer to a given question.
-        This tool is intended to be used interactively during student interaction
-        where the AI tutor persent the question to the student collects answers from the student.
+        Displays a message to the student.
 
     Args:
-        question (str): The question to ask the student.
+        message (str): The message to display to the student.
 
     Returns:
-        str: The student's answer as plain text.
+        Student reply (could be also empty and then you should continue lead the conversation)
     """
-    return str(input(f"\nQuestion: {question}\nWrite your answer here: "))
+    print("\n\n📚🤖 AI Teacher:") 
+    print(str(message).replace("\\n", "\n"))
+    return str(input("\n🎓 Student: "))
 
-def get_student_response(message_to_student):
+def get_student_response(message):
     """
     Tool Name: Get Student Response
     Description:
@@ -28,4 +30,10 @@ def get_student_response(message_to_student):
     Returns:
         str: The student's response as plain text.
     """
-    return str(input(f"\n{message_to_student}\nYour Reply: "))
+    print("\n\n📚🤖 AI Teacher:\t")
+    print(str(message).replace("\\n", "\n"))
+    return str(input("\n🎓 Student: "))
+
+if __name__ == "__main__":
+    message_with_tabs = "check\\n\\ncheck2"
+    present_message_to_user(message_with_tabs)
