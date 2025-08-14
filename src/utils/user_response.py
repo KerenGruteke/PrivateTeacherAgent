@@ -1,4 +1,4 @@
-def get_student_answer(question: str):
+def present_question(question: str) -> str:
     """
     Tool Name: Get Student Answer
     Description:
@@ -28,4 +28,4 @@ def get_student_response(message_to_student):
     Returns:
         str: The student's response as plain text.
     """
-    return str(input(f"\n{message_to_student}\nWrite your response here: "))
+    return str(input(f"\n{message_to_student}\nYour Reply: "))

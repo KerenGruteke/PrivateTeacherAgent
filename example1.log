@@ -1,0 +1,85 @@
+Script started on Thu Aug 14 16:04:28 2025
+[0m[38;5;242m[49m[39m[27m[24m[K
+
+[2A7[0m[49m[39m[0m[48;5;238m[38;5;255m [0m[38;5;255m[48;5;238m[48;5;238m[38;5;255m [0m[38;5;255m[48;5;238m[48;5;238m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;31m  [1m[38;5;31m[48;5;238m[38;5;39m~[0m[38;5;39m[48;5;238m[48;5;238m[38;5;31m/Projects/[1m[38;5;31m[48;5;238m[38;5;39mPrivateTeacherAgent[0m[38;5;39m[48;5;238m[48;5;238m[38;5;31m[0m[38;5;31m[48;5;238m[48;5;238m[38;5;31m [0m[38;5;31m[48;5;238m[49m[38;5;238m[0m[38;5;238m[49m[39m[38;5;242m············································································································································[0m[38;5;242m[49m[38;5;238m[0m[38;5;238m[48;5;238m[38;5;66m 16:04:28[0m[38;5;66m[48;5;238m[48;5;238m[38;5;66m [0m[38;5;66m[48;5;238m[48;5;238m[38;5;66m [0m[38;5;66m[48;5;238m[49m[39m[38;5;242m─╮
+[0m[38;5;242m[49m[39m[0m[49m[38;5;76m❯[0m[38;5;76m[49m[38;5;76m[0m[38;5;76m[49m[30m[0m[30m[49m[39m [0m[49m[39m                                                                                                                                                                                              [0m[38;5;242m[49m[39m[38;5;242m─╯[0m[38;5;242m[49m[39m[27m[24m[2C[?2004h[?25l8[0m[49m[39m[27m[24m[J]2;kereng@Kerens-MBP:~/Projects/PrivateTeacherAgent]1;..eTeacherAgent]7;file://Kerens-MBP.lan/Users/kereng/Projects/PrivateTeacherAgent\[0m[38;5;31m[49m[39m[27m[24m[1m[7m%[27m[1m[0m                                                                                                                                                                                                  [0m[49m[39m[27m[24m[K[0m[27m[24m[J[0m[38;5;242m[49m[39m
+[A[0m[48;5;238m[38;5;255m [0m[38;5;255m[48;5;238m[48;5;238m[38;5;255m [0m[38;5;255m[48;5;238m[48;5;238m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;31m  [1m[38;5;31m[48;5;238m[38;5;39m~[0m[38;5;39m[48;5;238m[48;5;238m[38;5;31m/Projects/[1m[38;5;31m[48;5;238m[38;5;39mPrivateTeacherAgent[0m[38;5;39m[48;5;238m[48;5;238m[38;5;31m[0m[38;5;31m[48;5;238m[48;5;238m[38;5;31m [0m[38;5;31m[48;5;238m[48;5;238m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;178m [0m[38;5;178m[48;5;238m[48;5;238m[38;5;76m[0m[38;5;76m[48;5;238m[48;5;238m[38;5;178m [38;5;76m main [38;5;76m⇡2 [38;5;178m+1 [38;5;178m!11 [38;5;39m?2[0m[38;5;39m[48;5;238m[48;5;238m[38;5;178m [0m[38;5;178m[48;5;238m[49m[38;5;238m[0m[38;5;238m[49m[39m[38;5;242m···········································································································[0m[38;5;242m[49m[38;5;238m[0m[38;5;238m[48;5;238m[38;5;37m base[0m[38;5;37m[48;5;238m[48;5;238m[38;5;37m [0m[38;5;37m[48;5;238m[48;5;238m[38;5;37m [0m[38;5;37m[48;5;238m[48;5;238m[38;5;37m[0m[38;5;37m[48;5;238m[48;5;238m[38;5;66m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;66m 16:04:28[0m[38;5;66m[48;5;238m[48;5;238m[38;5;66m [0m[38;5;66m[48;5;238m[48;5;238m[38;5;66m [0m[38;5;66m[48;5;238m[49m[39m[38;5;242m─╮
+[0m[38;5;242m[49m[39m[0m[49m[38;5;76m❯[0m[38;5;76m[49m[38;5;76m[0m[38;5;76m[49m[30m[0m[30m[49m[39m [0m[49m[39m[K[190C[0m[49m[39m[38;5;242m─╯[39m[192D[?1h=[?25h[?2004hscript example1.log[19D. /Users/kereng/miniforge3/etc/profile.d/conda.sh && conda activate private_teacher_agent[89Dconda run --live-stream --name [2Civate_teacher_agent python /Users/kereng/Projects/PrivateTeacherAgent/src/agent/coacher.py[123Dscript example1.log                                                                                                        [104D[19Dconda run --live-stream --name private_teacher_agent python /Users/kereng/Projects/PrivateTeacherAgent/src/agent/coacher.py[123D. /Users/kereng/miniforge3/etc/[2Cofile.d/conda.sh && conda activate private_teacher_agent                                  [34D[89Dok!                                                                                      [86Dconda run --live-stream --name private_teacher_agent python /Users/kereng/Projects/PrivateTeacherAgent/src/agent/run.py[?1l>[?25l[?2004l[A[0m[27m[24m[J[0m[49m[27m[24m[38;5;76m❯[0m[38;5;76m[49m[39m[27m[24m conda run --live-stream --name private_teacher_agent python /Users/kereng/Projects/PrivateTeacherAgent/src/agent/run.py[K[?25h
+]2;conda run --live-stream --name private_teacher_agent python ]1;conda
+Hi! What is your name?
+Your Reply: Or  
+
+Nice to meet you, Or! Please enter an id number:
+Your Reply: 1212
+
+
+Hi Or! 👋 I’m your private teacher for today! Ready to help you learn, practice, and improve.
+My main areas of expertise are Math, History, Science, and SAT questions.
+
+What course would you like to focus on today?
+Please enter one of the following options: Math, History, Science, SAT
+
+Your Reply: History
+Inserting data into students_db:   0%|                                                                                                                                       | 0/1 [00:00<?, ?it/s]Inserting data into students_db: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 3077.26it/s]
+Collection 'students_db' size: count=10
+
+
+That's great Or! Lets study today a bit of History.
+Do you have any specific topics or requests in mind?
+
+Your Reply: some question about the world
+
+Question: question="The concept of humanism was a key characteristic of which historical period?
+Write your answer here: hmm Im not sure, are therre          are there any options?
+
+Question: No problem! Here are some options to consider:  
+A) The Renaissance  
+B) The Middle Ages  
+C) The Industrial Revolution  
+D) The Enlightenment  
+
+Which one do you think fits best?
+Write your answer here: hmm maybe 1 the Renaissance?
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/utilities/duckduckgo_search.py:63: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as ddgs:
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+
+Question: Which invention during the Renaissance had the greatest impact on the spread of knowledge, and why?  
+
+Hint: Think about how books were made before the Renaissance and what changed during this period.
+Write your answer here: maybe that we       somehi ting with prinin  ting?
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/Projects/PrivateTeacherAgent/src/data/index_and_search.py:147: DeprecationWarning: `search` method is deprecated and will be removed in the future. Use `query_points` instead.
+  results = self.qdrant_client.search(collection_name=collection_name, query_vector=vec, limit=top_k)
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/utilities/duckduckgo_search.py:63: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as ddgs:
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+/Users/kereng/miniforge3/envs/private_teacher_agent/lib/python3.11/site-packages/langchain_community/chat_models/azure_openai.py:274: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  response = response.dict()
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   ]2;kereng@Kerens-MBP:~/Projects/PrivateTeacherAgent]1;..eTeacherAgent]7;file://Kerens-MBP.lan/Users/kereng/Projects/PrivateTeacherAgent\[0m[27m[24m[J[0m[38;5;242m[49m[39m
+
+[A[0m[48;5;238m[38;5;255m [0m[38;5;255m[48;5;238m[48;5;238m[38;5;255m [0m[38;5;255m[48;5;238m[48;5;238m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;31m  [1m[38;5;31m[48;5;238m[38;5;39m~[0m[38;5;39m[48;5;238m[48;5;238m[38;5;31m/Projects/[1m[38;5;31m[48;5;238m[38;5;39mPrivateTeacherAgent[0m[38;5;39m[48;5;238m[48;5;238m[38;5;31m[0m[38;5;31m[48;5;238m[48;5;238m[38;5;31m [0m[38;5;31m[48;5;238m[48;5;238m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;178m [0m[38;5;178m[48;5;238m[48;5;238m[38;5;76m[0m[38;5;76m[48;5;238m[48;5;238m[38;5;178m [38;5;76m main [38;5;76m⇡2 [38;5;178m+1 [38;5;178m!11 [38;5;39m?2[0m[38;5;39m[48;5;238m[48;5;238m[38;5;178m [0m[38;5;178m[48;5;238m[49m[38;5;238m[0m[38;5;238m[49m[39m[38;5;242m································································································[0m[38;5;242m[49m[38;5;238m[0m[38;5;238m[48;5;238m[38;5;248m 3m 35s[0m[38;5;248m[48;5;238m[48;5;238m[38;5;248m [0m[38;5;248m[48;5;238m[48;5;238m[38;5;248m [0m[38;5;248m[48;5;238m[48;5;238m[38;5;248m[0m[38;5;248m[48;5;238m[48;5;238m[38;5;37m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;37m base[0m[38;5;37m[48;5;238m[48;5;238m[38;5;37m [0m[38;5;37m[48;5;238m[48;5;238m[38;5;37m [0m[38;5;37m[48;5;238m[48;5;238m[38;5;37m[0m[38;5;37m[48;5;238m[48;5;238m[38;5;66m[38;5;246m│[0m[38;5;246m[48;5;238m[48;5;238m[38;5;66m 16:08:12[0m[38;5;66m[48;5;238m[48;5;238m[38;5;66m [0m[38;5;66m[48;5;238m[48;5;238m[38;5;66m [0m[38;5;66m[48;5;238m[49m[39m[38;5;242m─╮
+[0m[38;5;242m[49m[39m[0m[49m[38;5;76m❯[0m[38;5;76m[49m[38;5;76m[0m[38;5;76m[49m[30m[0m[30m[49m[39m [0m[49m[39m[K[190C[0m[49m[39m[38;5;242m─╯[39m[192D[?1h=[?2004h
