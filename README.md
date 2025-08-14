@@ -118,11 +118,6 @@ For full size examples, please refer to the directory `examples`.
 
 ## Additional Description Per Path
 
-### `examples/`
-| Path | Description |
-|------|-------------|
-| `examples/` | Example interactions and use cases |
-
 ### `src/agent/`
 | Path | Description |
 |------|-------------|
