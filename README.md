@@ -54,7 +54,7 @@ The agent adapts its teaching style to the student’s level, uses past performa
 
 ```bash
 # Clone repository
-git clone <repo-url>
+git clone (https://github.com/KerenGruteke/PrivateTeacherAgent.git)
 cd PrivateTeacherAgent
 
 # Install dependencies
